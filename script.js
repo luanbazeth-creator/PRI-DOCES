@@ -563,6 +563,69 @@ ${address}
 
 
 /* ============================================================
+   EVENTOS DA PERSONALIZAÇÃO
+   ============================================================ */
+
+/*
+   Na V3 o modal abria, mas os botões internos não tinham
+   seus eventos conectados. Aqui fazemos essa ligação.
+*/
+
+elements.closeCustomization =
+  document.getElementById("closeCustomization");
+
+elements.closeCustomization.addEventListener(
+  "click",
+  closeCustomization
+);
+
+
+elements.customizationModal.addEventListener(
+  "click",
+  (event) => {
+    if (event.target === elements.customizationModal) {
+      closeCustomization();
+    }
+  }
+);
+
+
+elements.confirmCustomization.addEventListener(
+  "click",
+  (event) => {
+    event.preventDefault();
+    confirmProductCustomization();
+  }
+);
+
+elements.skipCustomization.addEventListener(
+  "click",
+  (event) => {
+    event.preventDefault();
+    addCustomizedProductWithoutOptions();
+  }
+);
+
+elements.customQuantityMinus.addEventListener(
+  "click",
+  () => {
+    customizationState.quantity =
+      Math.max(1, customizationState.quantity - 1);
+
+    updateCustomizationQuantity();
+  }
+);
+
+elements.customQuantityPlus.addEventListener(
+  "click",
+  () => {
+    customizationState.quantity += 1;
+    updateCustomizationQuantity();
+  }
+);
+
+
+/* ============================================================
    08. EVENTOS
    ============================================================ */
 

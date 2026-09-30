@@ -73,3 +73,14 @@ Depois vamos conectar:
 - Contador no topo mostra a quantidade total.
 - Dinheiro mostra campo de troco e calcula o valor.
 - Personalização e troco entram na mensagem do WhatsApp.
+
+
+## V4 — Correção da personalização
+
+- Corrigido o botão `Adicionar ao carrinho` da janela de personalização.
+- Agora o item é realmente adicionado ao carrinho e a janela de personalização fecha.
+- O carrinho não abre automaticamente.
+- O contador no topo é atualizado.
+- O botão secundário agora se chama `Continuar sem personalizar`.
+- O botão secundário recebeu uma cor rosa suave, diferente do botão principal, mas dentro da identidade visual da loja.
+- Também é possível fechar a personalização clicando fora da janela.
