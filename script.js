@@ -1,0 +1,548 @@
+/* ============================================================
+   PIU DOCES | SCRIPT.JS
+   Organização:
+   01. Dados dos produtos
+   02. Estado da aplicação
+   03. Seletores do DOM
+   04. Produtos / filtros
+   05. Carrinho
+   06. Painéis
+   07. Finalização
+   08. Inicialização
+
+   IMPORTANTE:
+   Depois vamos trocar o array local pelo Firestore.
+   ============================================================ */
+
+
+/* ============================================================
+   01. DADOS DOS PRODUTOS
+   ============================================================ */
+
+const products = [
+  {
+    id: 1,
+    name: "Brigadeiro Gourmet",
+    category: "Brigadeiros",
+    price: 4.50,
+    description: "Brigadeiro cremoso com chocolate de qualidade.",
+    emoji: "🍫"
+  },
+  {
+    id: 2,
+    name: "Beijinho",
+    category: "Brigadeiros",
+    price: 4.50,
+    description: "Docinho de coco delicado e cremoso.",
+    emoji: "🥥"
+  },
+  {
+    id: 3,
+    name: "Morango do Amor",
+    category: "Doces",
+    price: 12.00,
+    description: "Morango envolvido em uma deliciosa cobertura.",
+    emoji: "🍓"
+  },
+  {
+    id: 4,
+    name: "Brownie Gourmet",
+    category: "Doces",
+    price: 10.00,
+    description: "Brownie macio, intenso e cheio de chocolate.",
+    emoji: "🍫"
+  },
+  {
+    id: 5,
+    name: "Bolo de Pote",
+    category: "Bolos",
+    price: 14.00,
+    description: "Camadas de bolo e recheio preparados na hora.",
+    emoji: "🍰"
+  },
+  {
+    id: 6,
+    name: "Mini Bolo",
+    category: "Bolos",
+    price: 28.00,
+    description: "Bolo delicado perfeito para presentear.",
+    emoji: "🎂"
+  },
+  {
+    id: 7,
+    name: "Kit Festa",
+    category: "Kits",
+    price: 49.90,
+    description: "Seleção especial de doces para sua comemoração.",
+    emoji: "🎁"
+  },
+  {
+    id: 8,
+    name: "Caixa Especial",
+    category: "Kits",
+    price: 59.90,
+    description: "Uma caixa linda com nossos doces favoritos.",
+    emoji: "💝"
+  }
+];
+
+
+/* ============================================================
+   02. ESTADO DA APLICAÇÃO
+   ============================================================ */
+
+let cartItemsState = [];
+let selectedCategory = "Todos";
+
+
+/* ============================================================
+   03. SELETORES DO DOM
+   ============================================================ */
+
+const elements = {
+  products: document.getElementById("products"),
+  searchInput: document.getElementById("searchInput"),
+  resultCount: document.getElementById("resultCount"),
+
+  cart: document.getElementById("cart"),
+  overlay: document.getElementById("overlay"),
+  cartItems: document.getElementById("cartItems"),
+  cartCount: document.getElementById("cartCount"),
+  cartTotal: document.getElementById("cartTotal"),
+  checkoutButton: document.getElementById("checkout"),
+
+  checkoutModal: document.getElementById("checkoutModal")
+};
+
+
+/* ============================================================
+   04. PRODUTOS / FILTROS
+   ============================================================ */
+
+function formatCurrency(value) {
+  return value.toLocaleString("pt-BR", {
+    style: "currency",
+    currency: "BRL"
+  });
+}
+
+
+function getFilteredProducts() {
+  const search = elements.searchInput.value
+    .toLowerCase()
+    .trim();
+
+  return products.filter((product) => {
+
+    const matchesCategory =
+      selectedCategory === "Todos" ||
+      product.category === selectedCategory;
+
+    const searchableText = `
+      ${product.name}
+      ${product.category}
+      ${product.description}
+    `.toLowerCase();
+
+    const matchesSearch =
+      searchableText.includes(search);
+
+    return matchesCategory && matchesSearch;
+  });
+}
+
+
+function renderProducts() {
+  const filteredProducts = getFilteredProducts();
+
+  elements.resultCount.textContent =
+    `${filteredProducts.length} produto${filteredProducts.length === 1 ? "" : "s"}`;
+
+  if (!filteredProducts.length) {
+    elements.products.innerHTML = `
+      <p class="no-results">
+        Nenhum produto encontrado. ♡
+      </p>
+    `;
+
+    return;
+  }
+
+  elements.products.innerHTML = filteredProducts
+    .map(createProductCard)
+    .join("");
+}
+
+
+function createProductCard(product) {
+  return `
+    <article class="product-card">
+
+      <div class="product-image">
+        ${product.emoji}
+      </div>
+
+      <div class="product-info">
+
+        <span class="product-category">
+          ${product.category}
+        </span>
+
+        <h3>
+          ${product.name}
+        </h3>
+
+        <p>
+          ${product.description}
+        </p>
+
+        <div class="product-bottom">
+
+          <span class="product-price">
+            ${formatCurrency(product.price)}
+          </span>
+
+          <button
+            class="add-product"
+            type="button"
+            onclick="addToCart(${product.id})"
+            aria-label="Adicionar ${product.name}"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+    </article>
+  `;
+}
+
+
+/* ============================================================
+   05. CARRINHO
+   ============================================================ */
+
+function addToCart(productId) {
+  const product = products.find(
+    (item) => item.id === productId
+  );
+
+  if (!product) {
+    return;
+  }
+
+  const existingItem = cartItemsState.find(
+    (item) => item.id === productId
+  );
+
+  if (existingItem) {
+    existingItem.quantity += 1;
+  } else {
+    cartItemsState.push({
+      ...product,
+      quantity: 1
+    });
+  }
+
+  renderCart();
+  openCart();
+}
+
+
+function changeQuantity(productId, amount) {
+  const item = cartItemsState.find(
+    (cartItem) => cartItem.id === productId
+  );
+
+  if (!item) {
+    return;
+  }
+
+  item.quantity += amount;
+
+  if (item.quantity <= 0) {
+    cartItemsState = cartItemsState.filter(
+      (cartItem) => cartItem.id !== productId
+    );
+  }
+
+  renderCart();
+}
+
+
+function calculateCartTotal() {
+  return cartItemsState.reduce(
+    (total, item) => total + (item.price * item.quantity),
+    0
+  );
+}
+
+
+function calculateCartQuantity() {
+  return cartItemsState.reduce(
+    (total, item) => total + item.quantity,
+    0
+  );
+}
+
+
+function renderCart() {
+  const totalQuantity = calculateCartQuantity();
+  const totalPrice = calculateCartTotal();
+
+  elements.cartCount.textContent = totalQuantity;
+  elements.cartTotal.textContent = formatCurrency(totalPrice);
+
+  elements.checkoutButton.disabled =
+    cartItemsState.length === 0;
+
+
+  if (!cartItemsState.length) {
+    elements.cartItems.innerHTML = `
+      <div class="empty-cart">
+
+        <div class="empty-icon">
+          🧁
+        </div>
+
+        <h3>
+          Seu carrinho está vazio
+        </h3>
+
+        <p>
+          Adicione um docinho para começar.
+        </p>
+
+      </div>
+    `;
+
+    return;
+  }
+
+
+  elements.cartItems.innerHTML =
+    cartItemsState
+      .map(createCartItem)
+      .join("");
+}
+
+
+function createCartItem(item) {
+  return `
+    <div class="cart-item">
+
+      <div class="cart-item-image">
+        ${item.emoji}
+      </div>
+
+      <div>
+
+        <h4>
+          ${item.name}
+        </h4>
+
+        <p>
+          ${formatCurrency(item.price)} cada
+        </p>
+
+        <div class="quantity-controls">
+
+          <button
+            type="button"
+            onclick="changeQuantity(${item.id}, -1)"
+          >
+            −
+          </button>
+
+          <strong>
+            ${item.quantity}
+          </strong>
+
+          <button
+            type="button"
+            onclick="changeQuantity(${item.id}, 1)"
+          >
+            +
+          </button>
+
+        </div>
+
+      </div>
+
+      <strong>
+        ${formatCurrency(item.price * item.quantity)}
+      </strong>
+
+    </div>
+  `;
+}
+
+
+/* ============================================================
+   06. PAINÉIS
+   ============================================================ */
+
+function openCart() {
+  elements.cart.classList.add("open");
+  elements.overlay.classList.add("show");
+}
+
+
+function closeCart() {
+  elements.cart.classList.remove("open");
+  elements.overlay.classList.remove("show");
+}
+
+
+function openCheckoutModal() {
+  if (!cartItemsState.length) {
+    return;
+  }
+
+  elements.checkoutModal.classList.add("show");
+}
+
+
+function closeCheckoutModal() {
+  elements.checkoutModal.classList.remove("show");
+}
+
+
+/* ============================================================
+   07. FINALIZAÇÃO / WHATSAPP
+   ============================================================ */
+
+function sendOrderToWhatsApp() {
+  const name =
+    document.getElementById("customerName").value.trim();
+
+  const payment =
+    document.getElementById("payment").value;
+
+  const address =
+    document.getElementById("address").value.trim();
+
+
+  if (!name || !address) {
+    alert("Preencha seu nome e endereço/observação.");
+    return;
+  }
+
+
+  /*
+    ATENÇÃO:
+    Na próxima etapa coloque aqui o WhatsApp real da loja.
+
+    Exemplo:
+    const whatsappNumber = "5522999999999";
+  */
+
+  const whatsappNumber = "5500000000000";
+
+
+  const orderItems = cartItemsState
+    .map((item) => {
+      return `• ${item.quantity}x ${item.name} — ${formatCurrency(item.price * item.quantity)}`;
+    })
+    .join("\n");
+
+
+  const message = `
+🍰 *NOVO PEDIDO — PIU DOCES*
+
+👤 Nome: ${name}
+
+🧁 *Pedido:*
+${orderItems}
+
+💰 *Total:* ${formatCurrency(calculateCartTotal())}
+
+💳 *Pagamento:* ${payment}
+
+📍 *Endereço / observação:*
+${address}
+  `.trim();
+
+
+  const whatsappUrl =
+    `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappUrl, "_blank");
+}
+
+
+/* ============================================================
+   08. EVENTOS
+   ============================================================ */
+
+document
+  .getElementById("openCart")
+  .addEventListener("click", openCart);
+
+
+document
+  .getElementById("closeCart")
+  .addEventListener("click", closeCart);
+
+
+elements.overlay.addEventListener(
+  "click",
+  closeCart
+);
+
+
+elements.searchInput.addEventListener(
+  "input",
+  renderProducts
+);
+
+
+document
+  .getElementById("categories")
+  .addEventListener("click", (event) => {
+
+    if (!event.target.matches(".category-button")) {
+      return;
+    }
+
+    document
+      .querySelectorAll(".category-button")
+      .forEach((button) => {
+        button.classList.remove("active");
+      });
+
+
+    event.target.classList.add("active");
+
+    selectedCategory =
+      event.target.dataset.category;
+
+
+    renderProducts();
+  });
+
+
+elements.checkoutButton.addEventListener(
+  "click",
+  openCheckoutModal
+);
+
+
+document
+  .getElementById("closeCheckout")
+  .addEventListener("click", closeCheckoutModal);
+
+
+document
+  .getElementById("whatsappOrder")
+  .addEventListener("click", sendOrderToWhatsApp);
+
+
+/* ============================================================
+   09. INICIALIZAÇÃO
+   ============================================================ */
+
+renderProducts();
+renderCart();

@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- =========================================================
+       PIU DOCES | SITE DA LOJA
+       Estrutura:
+       1. Cabeçalho
+       2. Hero / apresentação
+       3. Busca e categorias
+       4. Produtos
+       5. Carrinho
+       6. Finalização
+       ========================================================= -->
+
+  <title>Piu Doces | Doces feitos com carinho</title>
+
+  <!-- Fontes -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Estilos do projeto -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- =========================================================
+       HEADER
+       ========================================================= -->
+  <header class="site-header">
+    <div class="container header-content">
+
+      <a class="brand" href="#" aria-label="Piu Doces - início">
+        <img
+          class="brand-photo"
+          src="assets/perfil.jpg"
+          alt="Foto da dona da Piu Doces"
+        >
+
+        <div class="brand-info">
+          <strong>Piu Doces</strong>
+          <span>Doces feitos com carinho ♡</span>
+        </div>
+      </a>
+
+      <button class="cart-button" id="openCart" type="button">
+        <span class="cart-icon">🛒</span>
+        <span class="cart-label">Carrinho</span>
+        <b id="cartCount">0</b>
+      </button>
+
+    </div>
+  </header>
+
+
+  <main>
+
+    <!-- =======================================================
+         HERO
+         ======================================================= -->
+    <section class="hero-section">
+      <div class="container hero-card">
+
+        <div class="hero-content">
+          <span class="eyebrow">PIU DOCES</span>
+
+          <h1>
+            Um docinho para
+            <em>adoçar seu dia</em> ♡
+          </h1>
+
+          <p>
+            Escolha seus favoritos e monte seu pedido
+            de um jeito simples e gostoso.
+          </p>
+
+          <div class="store-status">
+            <i></i>
+            <span>Aberto agora</span>
+          </div>
+        </div>
+
+        <!-- Selo com o logo enviado pela cliente -->
+        <img
+          class="hero-seal"
+          src="assets/selo-piu-doces.png"
+          alt="Piu Doces"
+        >
+
+      </div>
+    </section>
+
+
+    <!-- =======================================================
+         CARDÁPIO
+         ======================================================= -->
+    <section class="menu-section" id="cardapio">
+      <div class="container">
+
+        <div class="menu-heading">
+          <div>
+            <span class="section-label">CARDÁPIO</span>
+            <h2>Escolha seus doces</h2>
+            <p>Encontre seu favorito ou pesquise pelo nome.</p>
+          </div>
+
+          <span class="opening-hours">
+            Hoje • 08:00 às 22:00
+          </span>
+        </div>
+
+
+        <!-- Busca -->
+        <div class="search-box">
+          <span aria-hidden="true">⌕</span>
+
+          <input
+            id="searchInput"
+            type="search"
+            placeholder="Pesquisar produto..."
+            autocomplete="off"
+            aria-label="Pesquisar produto"
+          >
+        </div>
+
+
+        <!-- Categorias -->
+        <nav class="categories" id="categories" aria-label="Categorias do cardápio">
+
+          <button class="category-button active" data-category="Todos" type="button">
+            Todos
+          </button>
+
+          <button class="category-button" data-category="Brigadeiros" type="button">
+            Brigadeiros
+          </button>
+
+          <button class="category-button" data-category="Bolos" type="button">
+            Bolos
+          </button>
+
+          <button class="category-button" data-category="Doces" type="button">
+            Doces
+          </button>
+
+          <button class="category-button" data-category="Kits" type="button">
+            Kits
+          </button>
+
+        </nav>
+
+
+        <!-- Produtos -->
+        <div class="section-title">
+          <h2>Mais pedidos</h2>
+          <span id="resultCount"></span>
+        </div>
+
+        <div class="products-grid" id="products">
+          <!-- Os produtos são renderizados pelo script.js -->
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- =========================================================
+       OVERLAY
+       ========================================================= -->
+  <div class="overlay" id="overlay"></div>
+
+
+  <!-- =========================================================
+       CARRINHO
+       ========================================================= -->
+  <aside class="cart-panel" id="cart" aria-label="Carrinho de compras">
+
+    <div class="cart-header">
+      <div>
+        <span class="section-label">SEU PEDIDO</span>
+        <h2>Carrinho</h2>
+      </div>
+
+      <button id="closeCart" class="close-button" type="button" aria-label="Fechar carrinho">
+        ×
+      </button>
+    </div>
+
+    <div class="cart-items" id="cartItems">
+      <!-- Itens renderizados pelo script.js -->
+    </div>
+
+    <div class="cart-footer">
+
+      <div class="cart-total">
+        <span>Total</span>
+        <strong id="cartTotal">R$ 0,00</strong>
+      </div>
+
+      <button class="primary-button" id="checkout" type="button">
+        Continuar pedido
+      </button>
+
+    </div>
+
+  </aside>
+
+
+  <!-- =========================================================
+       MODAL DE FINALIZAÇÃO
+       ========================================================= -->
+  <div class="modal" id="checkoutModal">
+
+    <div class="modal-card">
+
+      <button
+        class="modal-close"
+        id="closeCheckout"
+        type="button"
+        aria-label="Fechar"
+      >
+        ×
+      </button>
+
+      <span class="section-label">FINALIZAR PEDIDO</span>
+
+      <h2>Vamos preparar seu pedido ♡</h2>
+
+      <label>
+        Seu nome
+        <input id="customerName" type="text" placeholder="Digite seu nome">
+      </label>
+
+      <label>
+        Forma de pagamento
+        <select id="payment">
+          <option value="Pix">Pix</option>
+          <option value="Cartão">Cartão</option>
+          <option value="Dinheiro">Dinheiro</option>
+        </select>
+      </label>
+
+      <label>
+        Endereço / observação
+        <textarea
+          id="address"
+          rows="3"
+          placeholder="Endereço para entrega ou observações"
+        ></textarea>
+      </label>
+
+      <button class="primary-button" id="whatsappOrder" type="button">
+        Enviar pedido pelo WhatsApp
+      </button>
+
+      <small>
+        O número do WhatsApp será configurado na próxima etapa.
+      </small>
+
+    </div>
+
+  </div>
+
+
+  <!-- =========================================================
+       FOOTER
+       ========================================================= -->
+  <footer class="site-footer">
+    <strong>Piu Doces</strong>
+    <span>Feito com carinho ♡</span>
+  </footer>
+
+
+  <!-- JavaScript principal -->
+  <script src="script.js"></script>
+
+</body>
+</html>
