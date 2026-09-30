@@ -15,7 +15,7 @@
        6. Finalização
        ========================================================= -->
 
-  <title>Piu Doces | Doces feitos com carinho</title>
+  <title>Pri Doces | Doces feitos com carinho</title>
 
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -211,6 +211,24 @@
 
   </aside>
 
+  <!-- PERSONALIZAÇÃO DO PRODUTO -->
+  <div class="modal" id="customizationModal">
+    <div class="modal-card product-customization-card">
+      <button class="modal-close" id="closeCustomization" type="button">×</button>
+      <span class="section-label">PERSONALIZE SEU PEDIDO</span>
+      <div class="custom-product-heading">
+        <div class="custom-product-icon" id="customProductEmoji">🍫</div>
+        <div><h2 id="customProductName">Brigadeiro Gourmet</h2><p id="customProductDescription">Monte do seu jeito. Todas as opções são opcionais.</p></div>
+      </div>
+      <div class="custom-option-group"><div class="custom-option-title"><strong>Base / sabor</strong><span>Opcional</span></div><select id="customFlavor"><option value="">Não escolher</option><option>Chocolate</option><option>Ninho</option><option>Meio amargo</option></select></div>
+      <div class="custom-option-group"><div class="custom-option-title"><strong>Recheio</strong><span>Opcional</span></div><select id="customFilling"><option value="">Sem recheio</option><option>Nutella</option><option>Morango</option><option>Coco</option></select></div>
+      <div class="custom-option-group"><div class="custom-option-title"><strong>Finalização</strong><span>Opcional</span></div><select id="customTopping"><option value="">Não escolher</option><option>Granulado</option><option>Leite Ninho</option><option>Paçoca</option><option>Coco</option></select></div>
+      <div class="custom-quantity-row"><div><strong>Quantidade</strong><span>Escolha quantos deseja adicionar</span></div><div class="custom-quantity-controls"><button id="customQuantityMinus" type="button">−</button><strong id="customQuantity">1</strong><button id="customQuantityPlus" type="button">+</button></div></div>
+      <button class="primary-button" id="confirmCustomization" type="button">Adicionar ao carrinho</button>
+      <button class="text-button" id="skipCustomization" type="button">Adicionar sem personalizar</button>
+    </div>
+  </div>
+
 
   <!-- =========================================================
        MODAL DE FINALIZAÇÃO
@@ -245,6 +263,15 @@
           <option value="Dinheiro">Dinheiro</option>
         </select>
       </label>
+
+
+      <div class="cash-change-box" id="cashChangeBox" hidden>
+        <label>
+          Troco para quanto?
+          <input id="changeFor" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex.: 50,00">
+        </label>
+        <p id="changePreview" class="change-preview">Informe o valor que você vai entregar.</p>
+      </div>
 
       <label>
         Endereço / observação

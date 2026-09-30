@@ -64,3 +64,12 @@ Depois vamos conectar:
 - Upload de fotos
 - Pedidos
 - PWA do ADM
+
+
+## V3
+- Personalização opcional para brigadeiros e beijinho.
+- Quantidade escolhida antes de adicionar.
+- Adicionar ao carrinho não abre o painel automaticamente.
+- Contador no topo mostra a quantidade total.
+- Dinheiro mostra campo de troco e calcula o valor.
+- Personalização e troco entram na mensagem do WhatsApp.

@@ -26,7 +26,8 @@ const products = [
     category: "Brigadeiros",
     price: 4.50,
     description: "Brigadeiro cremoso com chocolate de qualidade.",
-    emoji: "🍫"
+    emoji: "🍫",
+    customizable: true
   },
   {
     id: 2,
@@ -34,7 +35,8 @@ const products = [
     category: "Brigadeiros",
     price: 4.50,
     description: "Docinho de coco delicado e cremoso.",
-    emoji: "🥥"
+    emoji: "🥥",
+    customizable: true
   },
   {
     id: 3,
@@ -94,6 +96,8 @@ const products = [
 let cartItemsState = [];
 let selectedCategory = "Todos";
 
+let customizationState = { product: null, quantity: 1 };
+
 
 /* ============================================================
    03. SELETORES DO DOM
@@ -111,7 +115,25 @@ const elements = {
   cartTotal: document.getElementById("cartTotal"),
   checkoutButton: document.getElementById("checkout"),
 
-  checkoutModal: document.getElementById("checkoutModal")
+  checkoutModal: document.getElementById("checkoutModal"),
+
+  customizationModal: document.getElementById("customizationModal"),
+  customProductEmoji: document.getElementById("customProductEmoji"),
+  customProductName: document.getElementById("customProductName"),
+  customProductDescription: document.getElementById("customProductDescription"),
+  customFlavor: document.getElementById("customFlavor"),
+  customFilling: document.getElementById("customFilling"),
+  customTopping: document.getElementById("customTopping"),
+  customQuantity: document.getElementById("customQuantity"),
+  customQuantityMinus: document.getElementById("customQuantityMinus"),
+  customQuantityPlus: document.getElementById("customQuantityPlus"),
+  confirmCustomization: document.getElementById("confirmCustomization"),
+  skipCustomization: document.getElementById("skipCustomization"),
+
+  payment: document.getElementById("payment"),
+  cashChangeBox: document.getElementById("cashChangeBox"),
+  changeFor: document.getElementById("changeFor"),
+  changePreview: document.getElementById("changePreview")
 };
 
 
@@ -175,6 +197,10 @@ function renderProducts() {
 
 
 function createProductCard(product) {
+  const customizationLabel = product.customizable
+    ? `<small class="customizable-label">♡ Monte do seu jeito</small>`
+    : "";
+
   return `
     <article class="product-card">
 
@@ -196,6 +222,8 @@ function createProductCard(product) {
           ${product.description}
         </p>
 
+        ${customizationLabel}
+
         <div class="product-bottom">
 
           <span class="product-price">
@@ -205,7 +233,7 @@ function createProductCard(product) {
           <button
             class="add-product"
             type="button"
-            onclick="addToCart(${product.id})"
+            onclick="handleProductSelection(${product.id})"
             aria-label="Adicionar ${product.name}"
           >
             +
@@ -224,36 +252,87 @@ function createProductCard(product) {
    05. CARRINHO
    ============================================================ */
 
-function addToCart(productId) {
-  const product = products.find(
-    (item) => item.id === productId
-  );
-
-  if (!product) {
+function handleProductSelection(productId) {
+  const product = products.find((item) => item.id === productId);
+  if (!product) return;
+  if (!product.customizable) {
+    addToCart(product, 1, {});
     return;
   }
-
-  const existingItem = cartItemsState.find(
-    (item) => item.id === productId
-  );
-
-  if (existingItem) {
-    existingItem.quantity += 1;
-  } else {
-    cartItemsState.push({
-      ...product,
-      quantity: 1
-    });
-  }
-
-  renderCart();
-  openCart();
+  openCustomization(product);
 }
 
+function openCustomization(product) {
+  customizationState = { product, quantity: 1 };
+  elements.customProductEmoji.textContent = product.emoji;
+  elements.customProductName.textContent = product.name;
+  elements.customProductDescription.textContent = "Monte do seu jeito. Todas as opções são opcionais.";
+  elements.customFlavor.value = "";
+  elements.customFilling.value = "";
+  elements.customTopping.value = "";
+  updateCustomizationQuantity();
+  elements.customizationModal.classList.add("show");
+}
 
-function changeQuantity(productId, amount) {
+function updateCustomizationQuantity() {
+  elements.customQuantity.textContent = customizationState.quantity;
+}
+
+function getCustomizationData() {
+  return {
+    flavor: elements.customFlavor.value,
+    filling: elements.customFilling.value,
+    topping: elements.customTopping.value
+  };
+}
+
+function getCustomizationLabel(customization) {
+  const parts = [];
+  if (customization.flavor) parts.push(`Sabor: ${customization.flavor}`);
+  if (customization.filling) parts.push(`Recheio: ${customization.filling}`);
+  if (customization.topping) parts.push(`Finalização: ${customization.topping}`);
+  return parts.join(" • ");
+}
+
+function closeCustomization() {
+  elements.customizationModal.classList.remove("show");
+  customizationState = { product: null, quantity: 1 };
+}
+
+function confirmProductCustomization() {
+  if (!customizationState.product) return;
+  addToCart(customizationState.product, customizationState.quantity, getCustomizationData());
+  closeCustomization();
+}
+
+function addCustomizedProductWithoutOptions() {
+  if (!customizationState.product) return;
+  addToCart(customizationState.product, 1, {});
+  closeCustomization();
+}
+
+function createCartId(productId, customization) {
+  return `${productId}-${JSON.stringify(customization)}`;
+}
+
+function addToCart(product, quantity = 1, customization = {}) {
+  const cartId = createCartId(product.id, customization);
+  const existingItem = cartItemsState.find((item) => item.cartId === cartId);
+  if (existingItem) {
+    existingItem.quantity += quantity;
+  } else {
+    cartItemsState.push({
+      cartId, productId: product.id, name: product.name, category: product.category,
+      price: product.price, emoji: product.emoji, quantity, customization
+    });
+  }
+  renderCart();
+  // O carrinho NÃO abre automaticamente. O cliente continua no cardápio.
+}
+
+function changeQuantity(cartId, amount) {
   const item = cartItemsState.find(
-    (cartItem) => cartItem.id === productId
+    (cartItem) => cartItem.cartId === cartId
   );
 
   if (!item) {
@@ -264,7 +343,7 @@ function changeQuantity(productId, amount) {
 
   if (item.quantity <= 0) {
     cartItemsState = cartItemsState.filter(
-      (cartItem) => cartItem.id !== productId
+      (cartItem) => cartItem.cartId !== cartId
     );
   }
 
@@ -330,51 +409,21 @@ function renderCart() {
 
 
 function createCartItem(item) {
+  const customizationLabel = getCustomizationLabel(item.customization);
   return `
     <div class="cart-item">
-
-      <div class="cart-item-image">
-        ${item.emoji}
-      </div>
-
+      <div class="cart-item-image">${item.emoji}</div>
       <div>
-
-        <h4>
-          ${item.name}
-        </h4>
-
-        <p>
-          ${formatCurrency(item.price)} cada
-        </p>
-
+        <h4>${item.name}</h4>
+        <p>${formatCurrency(item.price)} cada</p>
+        ${customizationLabel ? `<p class="cart-customization">${customizationLabel}</p>` : ""}
         <div class="quantity-controls">
-
-          <button
-            type="button"
-            onclick="changeQuantity(${item.id}, -1)"
-          >
-            −
-          </button>
-
-          <strong>
-            ${item.quantity}
-          </strong>
-
-          <button
-            type="button"
-            onclick="changeQuantity(${item.id}, 1)"
-          >
-            +
-          </button>
-
+          <button type="button" onclick="changeQuantity('${item.cartId}', -1)">−</button>
+          <strong>${item.quantity}</strong>
+          <button type="button" onclick="changeQuantity('${item.cartId}', 1)">+</button>
         </div>
-
       </div>
-
-      <strong>
-        ${formatCurrency(item.price * item.quantity)}
-      </strong>
-
+      <strong>${formatCurrency(item.price * item.quantity)}</strong>
     </div>
   `;
 }
@@ -409,6 +458,46 @@ function closeCheckoutModal() {
   elements.checkoutModal.classList.remove("show");
 }
 
+
+/* ============================================================
+   PAGAMENTO / TROCO
+   ============================================================ */
+
+function updatePaymentFields() {
+  const isCash = elements.payment.value === "Dinheiro";
+  elements.cashChangeBox.hidden = !isCash;
+  if (!isCash) {
+    elements.changeFor.value = "";
+    elements.changePreview.textContent = "Informe o valor que você vai entregar.";
+    elements.changePreview.className = "change-preview";
+  } else {
+    updateChangePreview();
+  }
+}
+
+function updateChangePreview() {
+  if (elements.payment.value !== "Dinheiro") return;
+  const amount = Number(elements.changeFor.value);
+  const total = calculateCartTotal();
+  if (!amount) {
+    elements.changePreview.textContent = "Informe o valor que você vai entregar.";
+    elements.changePreview.className = "change-preview";
+    return;
+  }
+  if (amount < total) {
+    elements.changePreview.textContent = `O valor precisa ser igual ou maior que ${formatCurrency(total)}.`;
+    elements.changePreview.className = "change-preview invalid";
+    return;
+  }
+  elements.changePreview.textContent = `Troco: ${formatCurrency(amount - total)}`;
+  elements.changePreview.className = "change-preview valid";
+}
+
+function getChangeForValue() {
+  if (elements.payment.value !== "Dinheiro") return null;
+  const amount = Number(elements.changeFor.value);
+  return amount && amount >= calculateCartTotal() ? amount : null;
+}
 
 /* ============================================================
    07. FINALIZAÇÃO / WHATSAPP
