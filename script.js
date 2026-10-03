@@ -544,7 +544,7 @@ function sendOrderToWhatsApp() {
     const whatsappNumber = "5522999999999";
   */
 
-  const whatsappNumber = PRII_CONTACTS.whatsapp || "5500000000000";
+    const whatsappNumber = PRII_CONTACTS.whatsapp || "5522999609681";
 
 
   const orderItems = cartItemsState
