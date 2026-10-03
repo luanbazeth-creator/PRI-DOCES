@@ -187,6 +187,227 @@ h3 {
 }
 
 
+
+/* ============================================================
+   03B. TELA DE ENTRADA / CAPA PRII DOCES
+   ============================================================ */
+.welcome-section {
+  min-height: 100svh;
+  position: relative;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  padding: 44px 20px;
+  background:
+    radial-gradient(circle at 15% 18%, rgba(255,255,255,.55), transparent 22%),
+    radial-gradient(circle at 88% 80%, rgba(200,160,109,.22), transparent 24%),
+    linear-gradient(145deg, #efadbf 0%, #f5c2cf 48%, #f8d6df 100%);
+}
+
+.welcome-section::before {
+  content: "";
+  position: absolute;
+  width: min(760px, 90vw);
+  height: min(760px, 90vw);
+  border: 1px solid rgba(200,160,109,.38);
+  border-radius: 50%;
+  transform: translate(8%, -3%);
+}
+
+.welcome-section::after {
+  content: "✦  •  ✦  •  ✦";
+  position: absolute;
+  right: 5%;
+  bottom: 7%;
+  color: rgba(200,160,109,.65);
+  font-size: 20px;
+  letter-spacing: 10px;
+  transform: rotate(-8deg);
+}
+
+.welcome-card {
+  position: relative;
+  z-index: 2;
+  width: min(620px, 100%);
+  padding: 34px 30px 28px;
+  text-align: center;
+  border: 1px solid rgba(255,255,255,.58);
+  border-radius: 34px;
+  background: rgba(255,248,250,.28);
+  box-shadow: 0 25px 70px rgba(117,67,55,.15);
+  backdrop-filter: blur(8px);
+}
+
+.welcome-kicker {
+  display: block;
+  color: #8a5a4b;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.welcome-logo-wrap {
+  width: 210px;
+  height: 210px;
+  margin: 13px auto 8px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: rgba(255,255,255,.42);
+  box-shadow: 0 12px 30px rgba(117,67,55,.10);
+}
+
+.welcome-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 7px 9px rgba(117,67,55,.08));
+}
+
+.welcome-card h1 {
+  margin: 6px 0 9px;
+  font-size: clamp(30px, 5vw, 44px);
+  line-height: 1.08;
+}
+
+.welcome-card h1 em {
+  color: #754337;
+  font-style: normal;
+}
+
+.welcome-card > p {
+  max-width: 470px;
+  margin: 0 auto;
+  color: #755d57;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.welcome-actions {
+  display: grid;
+  gap: 11px;
+  margin: 24px auto 20px;
+  text-align: left;
+}
+
+.welcome-button {
+  min-height: 68px;
+  display: grid;
+  grid-template-columns: 46px 1fr 24px;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 15px;
+  border: 1px solid rgba(117,67,55,.12);
+  border-radius: 18px;
+  color: #553028;
+  text-decoration: none;
+  background: rgba(255,255,255,.86);
+  box-shadow: 0 8px 20px rgba(117,67,55,.08);
+  transition: transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.welcome-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 13px 28px rgba(117,67,55,.13);
+}
+
+.welcome-button-icon {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 13px;
+  background: #f8dce4;
+  font-size: 20px;
+}
+
+.welcome-button strong,
+.welcome-button small {
+  display: block;
+}
+
+.welcome-button strong {
+  font-size: 14px;
+}
+
+.welcome-button small {
+  margin-top: 2px;
+  color: #927b76;
+  font-size: 11px;
+}
+
+.welcome-button > b {
+  color: #a77869;
+  font-size: 25px;
+  font-weight: 500;
+  text-align: right;
+}
+
+.welcome-button-menu {
+  background: #fffafc;
+}
+
+.welcome-button-whatsapp .welcome-button-icon {
+  background: #f2d7df;
+}
+
+.welcome-button-instagram .welcome-button-icon {
+  background: #eed5dd;
+}
+
+.welcome-footer {
+  color: #8f675c;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.welcome-decor {
+  position: absolute;
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(255,255,255,.42);
+  border-radius: 50%;
+}
+
+.welcome-decor-one {
+  left: -70px;
+  top: 14%;
+}
+
+.welcome-decor-two {
+  right: -75px;
+  bottom: 18%;
+}
+
+@media (max-width: 600px) {
+  .welcome-section {
+    min-height: auto;
+    padding: 24px 14px;
+  }
+
+  .welcome-card {
+    padding: 26px 17px 22px;
+    border-radius: 27px;
+  }
+
+  .welcome-logo-wrap {
+    width: 175px;
+    height: 175px;
+  }
+
+  .welcome-card h1 {
+    font-size: 31px;
+  }
+
+  .welcome-button {
+    min-height: 64px;
+    grid-template-columns: 42px 1fr 20px;
+    padding: 9px 12px;
+  }
+}
+
+
 /* ============================================================
    04. HERO
    ============================================================ */
@@ -991,3 +1212,32 @@ h3 {
 #skipCustomization:active {
   transform: translateY(0);
 }
+
+.featured-section{max-width:1180px;margin:34px auto 0}
+.featured-heading{display:flex;align-items:end;justify-content:space-between;gap:20px;margin-bottom:16px}
+.featured-heading h2{margin-top:4px;font-size:29px}
+.featured-heading p{margin-top:4px;color:var(--muted);font-size:12px}
+.carousel-controls{display:flex;gap:7px}
+.carousel-controls button{width:38px;height:38px;border-radius:12px;background:#f3d8df;border:1px solid #e8c5cd;color:var(--wine-dark);font-size:25px;cursor:pointer}
+.carousel-window{overflow:hidden;border-radius:21px}
+.carousel-track{display:flex;gap:15px;will-change:transform;transition:transform 1.2s cubic-bezier(.22,.61,.36,1)}
+.carousel-card{position:relative;flex:0 0 245px;height:210px;overflow:hidden;border-radius:20px;background:#f9dce2;border:1px solid #efd9dc;box-shadow:0 10px 25px rgba(117,67,55,.09);cursor:pointer}
+.carousel-card img{width:100%;height:100%;display:block;object-fit:cover;transition:transform .4s}
+.carousel-card:hover img{transform:scale(1.04)}
+.carousel-card:after{content:"";position:absolute;inset:35% 0 0;background:linear-gradient(transparent,rgba(70,35,28,.62));pointer-events:none}
+.carousel-placeholder{width:100%;height:100%;display:grid;place-items:center;background:linear-gradient(135deg,#f9dce2,#f4c4cf);font-size:56px}
+.carousel-card-info{position:absolute;z-index:2;left:16px;right:16px;bottom:14px;color:white}
+.carousel-card-info small{display:block;margin-bottom:3px;color:#ffe9ed;font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase}
+.carousel-card-info strong{display:block;font-family:"Playfair Display",serif;font-size:20px}
+.carousel-dots{display:flex;justify-content:center;gap:6px;margin-top:12px}
+.carousel-dot{width:7px;height:7px;border:0;border-radius:50%;background:#e5c5cb;padding:0}
+.carousel-dot.active{width:20px;border-radius:99px;background:var(--wine)}
+.cash-change-box{margin:-2px 0 14px;padding:13px;border:1px dashed #e1c8c7;border-radius:12px;background:#fff6f7}
+.cash-change-box[hidden]{display:none!important}
+.cash-change-box input{width:100%;margin-top:7px;padding:12px 13px;border:1px solid #e8d5d3;border-radius:11px;outline:none;background:white;color:var(--text)}
+.change-preview{margin-top:8px;color:var(--muted);font-size:11px}
+.change-preview.valid{color:#557249;font-weight:700}
+.change-preview.invalid{color:#a44949;font-weight:700}
+.product-card.product-highlight{animation:productHighlight 1.8s ease}
+@keyframes productHighlight{0%,100%{transform:translateY(0)}35%{transform:translateY(-5px);box-shadow:0 0 0 4px #f0c8d1,0 18px 40px rgba(117,67,55,.15)}}
+@media(max-width:600px){.featured-section{margin-left:14px;margin-right:14px}.featured-heading h2{font-size:24px}.carousel-card{flex-basis:210px;height:185px}}

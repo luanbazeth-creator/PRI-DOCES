@@ -84,3 +84,19 @@ Depois vamos conectar:
 - O botão secundário agora se chama `Continuar sem personalizar`.
 - O botão secundário recebeu uma cor rosa suave, diferente do botão principal, mas dentro da identidade visual da loja.
 - Também é possível fechar a personalização clicando fora da janela.
+
+## V5
+- Marca: PRII DOCES.
+- Carrossel com avanço lento de 5,2 segundos.
+- Clique em cada foto leva ao produto correspondente.
+- Fotos fáceis de substituir em assets/carousel/.
+- Pagamento em dinheiro mostra o campo "Troco para quanto?" e calcula o troco em tempo real.
+
+
+### V6 — Nova tela de entrada
+- Nova capa de abertura antes do site, inspirada na referência enviada.
+- Fundo em rosa mais marcado que o cardápio, sem ficar igual à paleta da área de produtos.
+- Logo enviada pela cliente aplicada no centro da capa.
+- Três ações: Cardápio, WhatsApp e Instagram.
+- Links de WhatsApp e Instagram ficam centralizados no objeto `PRII_CONTACTS` em `script.js`, para trocar facilmente quando a cliente enviar os dados reais.
+- Logo tratada em PNG transparente em `assets/logo-prii-doces.png`.

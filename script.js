@@ -528,7 +528,7 @@ function sendOrderToWhatsApp() {
     const whatsappNumber = "5522999999999";
   */
 
-  const whatsappNumber = "5500000000000";
+  const whatsappNumber = PRII_CONTACTS.whatsapp || "5500000000000";
 
 
   const orderItems = cartItemsState
@@ -539,7 +539,7 @@ function sendOrderToWhatsApp() {
 
 
   const message = `
-🍰 *NOVO PEDIDO — PIU DOCES*
+🍰 *NOVO PEDIDO — PRII DOCES*
 
 👤 Nome: ${name}
 
@@ -698,3 +698,109 @@ document
 
 renderProducts();
 renderCart();
+
+
+/* ================= PRII DOCES | LINKS DA CAPA ================= */
+const PRII_CONTACTS = {
+  // Coloque o número com DDI + DDD, somente números. Ex.: 5522999999999
+  whatsapp: "",
+  // Ex.: https://www.instagram.com/seuusuario/
+  instagram: ""
+};
+
+function setupWelcomeLinks() {
+  const whatsappButton = document.getElementById("welcomeWhatsApp");
+  const instagramButton = document.getElementById("welcomeInstagram");
+
+  if (whatsappButton) {
+    whatsappButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!PRII_CONTACTS.whatsapp) {
+        alert("O WhatsApp ainda não foi configurado. Me passe o número da loja para eu colocar o link.");
+        return;
+      }
+      window.open(`https://wa.me/${PRII_CONTACTS.whatsapp}`, "_blank");
+    });
+  }
+
+  if (instagramButton) {
+    instagramButton.addEventListener("click", (event) => {
+      event.preventDefault();
+      if (!PRII_CONTACTS.instagram) {
+        alert("O Instagram ainda não foi configurado. Me passe o @ da loja para eu colocar o link.");
+        return;
+      }
+      window.open(PRII_CONTACTS.instagram, "_blank");
+    });
+  }
+}
+
+setupWelcomeLinks();
+
+/* ================= PRII DOCES V5 ================= */
+const carouselItems=[
+ {productId:1,name:"Brigadeiro Gourmet",category:"Brigadeiros",image:"assets/carousel/brigadeiro.jpg",emoji:"🍫"},
+ {productId:2,name:"Beijinho",category:"Brigadeiros",image:"assets/carousel/beijinho.jpg",emoji:"🥥"},
+ {productId:3,name:"Morango do Amor",category:"Doces",image:"assets/carousel/morango-do-amor.jpg",emoji:"🍓"},
+ {productId:5,name:"Bolo de Pote",category:"Bolos",image:"assets/carousel/bolo-de-pote.jpg",emoji:"🍰"},
+ {productId:7,name:"Kit Festa",category:"Kits",image:"assets/carousel/kit-festa.jpg",emoji:"🎁"}
+];
+let carouselIndex=0,carouselTimer=null;
+function renderCarousel(){
+ const t=document.getElementById("carouselTrack"),d=document.getElementById("carouselDots");
+ if(!t||!d)return;
+ t.innerHTML=carouselItems.map(x=>`<article class="carousel-card" tabindex="0" data-product-id="${x.productId}"><img src="${x.image}" alt="${x.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'"><div class="carousel-placeholder" style="display:none">${x.emoji}</div><div class="carousel-card-info"><small>${x.category}</small><strong>${x.name}</strong></div></article>`).join("");
+ d.innerHTML=carouselItems.map((_,i)=>`<button class="carousel-dot ${i===0?"active":""}" data-carousel-index="${i}" type="button"></button>`).join("");
+}
+function updateCarousel(){
+ const t=document.getElementById("carouselTrack"),v=document.getElementById("carouselWindow"),c=t?.querySelector(".carousel-card");
+ if(!t||!v||!c)return;
+ const w=c.getBoundingClientRect().width,g=parseFloat(getComputedStyle(t).gap)||0;
+ const off=Math.min(carouselIndex*(w+g),Math.max(0,t.scrollWidth-v.clientWidth));
+ t.style.transform=`translate3d(${-off}px,0,0)`;
+ document.querySelectorAll(".carousel-dot").forEach((d,i)=>d.classList.toggle("active",i===carouselIndex));
+}
+function goCarousel(i){carouselIndex=(i+carouselItems.length)%carouselItems.length;updateCarousel()}
+function startCarousel(){clearInterval(carouselTimer);carouselTimer=setInterval(()=>goCarousel(carouselIndex+1),5200)}
+function setupCarousel(){
+ const t=document.getElementById("carouselTrack"),v=document.getElementById("carouselWindow");
+ if(!t||!v)return;
+ document.getElementById("carouselPrev").onclick=()=>{goCarousel(carouselIndex-1);startCarousel()};
+ document.getElementById("carouselNext").onclick=()=>{goCarousel(carouselIndex+1);startCarousel()};
+ t.onclick=e=>{const c=e.target.closest(".carousel-card");if(!c)return;const p=products.find(x=>x.id===Number(c.dataset.productId));if(!p)return;selectedCategory=p.category;elements.searchInput.value="";renderProducts();setTimeout(()=>{const target=document.querySelector(`.product-card[data-product-id="${p.id}"]`);target?.scrollIntoView({behavior:"smooth",block:"center"});target?.classList.add("product-highlight");setTimeout(()=>target?.classList.remove("product-highlight"),1800)},80)};
+ document.getElementById("carouselDots").onclick=e=>{const d=e.target.closest(".carousel-dot");if(d){goCarousel(Number(d.dataset.carouselIndex));startCarousel()}};
+ v.onmouseenter=()=>clearInterval(carouselTimer);v.onmouseleave=startCarousel;
+}
+function updatePaymentFieldsV5(){
+ const cash=elements.payment.value==="Dinheiro";
+ elements.cashChangeBox.hidden=!cash;
+ if(!cash)elements.changeFor.value="";
+ updateChangePreviewV5();
+}
+function updateChangePreviewV5(){
+ if(elements.payment.value!=="Dinheiro")return;
+ const amount=Number(elements.changeFor.value.replace(",",".")),total=calculateCartTotal();
+ if(!elements.changeFor.value||!Number.isFinite(amount)||amount<=0){elements.changePreview.textContent="Digite quanto o cliente vai entregar.";elements.changePreview.className="change-preview";return}
+ if(amount<total){elements.changePreview.textContent=`Valor insuficiente. Faltam ${formatCurrency(total-amount)}.`;elements.changePreview.className="change-preview invalid";return}
+ elements.changePreview.textContent=`Troco: ${formatCurrency(amount-total)}`;elements.changePreview.className="change-preview valid";
+}
+function initV5(){
+ renderCarousel();setupCarousel();updatePaymentFieldsV5();updateCarousel();startCarousel();
+ elements.payment.addEventListener("change",updatePaymentFieldsV5);
+ elements.changeFor.addEventListener("input",updateChangePreviewV5);
+ document.querySelectorAll(".product-card").forEach(c=>{if(c.dataset.productId)return});
+}
+if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initV5);else initV5();
+
+const _priiObserver=new MutationObserver(()=>{
+ const cards=document.querySelectorAll(".product-card");
+ cards.forEach(card=>{
+   if(card.dataset.productId)return;
+   const buttons=card.querySelectorAll("button");
+   const add=buttons[buttons.length-1];
+   const txt=card.textContent||"";
+   const p=products.find(x=>txt.includes(x.name));
+   if(p)card.dataset.productId=p.id;
+ });
+});
+_priiObserver.observe(document.body,{childList:true,subtree:true});

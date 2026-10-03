@@ -1,0 +1,9 @@
+Troque as fotos do carrossel nesta pasta.
+Nomes atuais:
+brigadeiro.jpg
+beijinho.jpg
+morango-do-amor.jpg
+bolo-de-pote.jpg
+kit-festa.jpg
+
+Os nomes/produtos podem ser alterados no array carouselItems do script.js.

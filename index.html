@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- =========================================================
-       PIU DOCES | SITE DA LOJA
+       PRII DOCES | SITE DA LOJA
        Estrutura:
        1. Cabeçalho
        2. Hero / apresentação
@@ -15,7 +15,7 @@
        6. Finalização
        ========================================================= -->
 
-  <title>Pri Doces | Doces feitos com carinho</title>
+  <title>PRII DOCES | Doces feitos com carinho</title>
 
   <!-- Fontes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -28,21 +28,67 @@
 
 <body>
 
+
+  <!-- =========================================================
+       TELA DE ENTRADA / CAPA
+       ========================================================= -->
+  <section class="welcome-section" id="inicio">
+    <div class="welcome-decor welcome-decor-one"></div>
+    <div class="welcome-decor welcome-decor-two"></div>
+
+    <div class="welcome-card">
+      <span class="welcome-kicker">DOCES ARTESANAIS • FEITOS COM CARINHO</span>
+
+      <div class="welcome-logo-wrap">
+        <img
+          class="welcome-logo"
+          src="assets/logo-prii-doces.png"
+          alt="Logo PRII DOCES"
+        >
+      </div>
+
+      <h1>Escolha como quer<br><em>conhecer a PRII DOCES</em></h1>
+      <p>Faça seu pedido pelo cardápio ou fale diretamente com a gente.</p>
+
+      <div class="welcome-actions">
+        <a class="welcome-button welcome-button-menu" href="#cardapio">
+          <span class="welcome-button-icon">🍰</span>
+          <span><strong>Ir para o cardápio</strong><small>Veja todos os doces</small></span>
+          <b>›</b>
+        </a>
+
+        <a class="welcome-button welcome-button-whatsapp" id="welcomeWhatsApp" href="#" data-config-link="whatsapp">
+          <span class="welcome-button-icon">💬</span>
+          <span><strong>Falar no WhatsApp</strong><small>Atendimento e encomendas</small></span>
+          <b>›</b>
+        </a>
+
+        <a class="welcome-button welcome-button-instagram" id="welcomeInstagram" href="#" data-config-link="instagram">
+          <span class="welcome-button-icon">◎</span>
+          <span><strong>Ver nosso Instagram</strong><small>Fotos, novidades e lançamentos</small></span>
+          <b>›</b>
+        </a>
+      </div>
+
+      <span class="welcome-footer">PRII DOCES • UM DOCINHO PARA ADOÇAR SEU DIA ♡</span>
+    </div>
+  </section>
+
   <!-- =========================================================
        HEADER
        ========================================================= -->
   <header class="site-header">
     <div class="container header-content">
 
-      <a class="brand" href="#" aria-label="Piu Doces - início">
+      <a class="brand" href="#" aria-label="PRII DOCES - início">
         <img
           class="brand-photo"
           src="assets/perfil.jpg"
-          alt="Foto da dona da Piu Doces"
+          alt="Foto da dona da PRII DOCES"
         >
 
         <div class="brand-info">
-          <strong>Piu Doces</strong>
+          <strong>PRII DOCES</strong>
           <span>Doces feitos com carinho ♡</span>
         </div>
       </a>
@@ -66,7 +112,7 @@
       <div class="container hero-card">
 
         <div class="hero-content">
-          <span class="eyebrow">PIU DOCES</span>
+          <span class="eyebrow">PRII DOCES</span>
 
           <h1>
             Um docinho para
@@ -88,7 +134,7 @@
         <img
           class="hero-seal"
           src="assets/selo-piu-doces.png"
-          alt="Piu Doces"
+          alt="PRII DOCES"
         >
 
       </div>
@@ -167,7 +213,26 @@
       </div>
     </section>
 
-  </main>
+  
+<section class="featured-section">
+  <div class="featured-heading">
+    <div>
+      <span class="section-label">DESTAQUES</span>
+      <h2>Doces que dão vontade de pedir ♡</h2>
+      <p>Clique em uma foto para ir direto ao doce.</p>
+    </div>
+    <div class="carousel-controls">
+      <button id="carouselPrev" type="button">‹</button>
+      <button id="carouselNext" type="button">›</button>
+    </div>
+  </div>
+  <div class="carousel-window" id="carouselWindow">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+</main>
 
 
   <!-- =========================================================
@@ -299,7 +364,7 @@
        FOOTER
        ========================================================= -->
   <footer class="site-footer">
-    <strong>Piu Doces</strong>
+    <strong>PRII DOCES</strong>
     <span>Feito com carinho ♡</span>
   </footer>
 
