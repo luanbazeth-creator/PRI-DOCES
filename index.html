@@ -1,376 +1,124 @@
+<!--
+=================================================================
+ARQUIVO HTML DOCUMENTADO
+
+Este projeto foi organizado para facilitar futuras alterações.
+
+SEÇÕES PRINCIPAIS:
+1. Cabeçalho
+2. Apresentação da empresa
+3. Cardápio
+4. Carrinho
+5. Rodapé
+
+DICA:
+Procure pelos comentários ===== para localizar cada área.
+=================================================================
+-->
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- =========================================================
-       PRII DOCES | SITE DA LOJA
-       Estrutura:
-       1. Cabeçalho
-       2. Hero / apresentação
-       3. Busca e categorias
-       4. Produtos
-       5. Carrinho
-       6. Finalização
-       ========================================================= -->
-
-  <title>PRII DOCES | Doces feitos com carinho</title>
-
-  <!-- Fontes -->
+  <meta name="description" content="PRII DOCES — doces artesanais feitos com carinho. Conheça a marca e acesse nosso cardápio online.">
+  <title>PRII DOCES | Doces artesanais</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-
-  <!-- Estilos do projeto -->
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="landing.css">
 </head>
-
 <body>
-
-
-  <!-- =========================================================
-       TELA DE ENTRADA / CAPA
-       ========================================================= -->
-  <section class="welcome-section" id="inicio">
-    <div class="welcome-decor welcome-decor-one"></div>
-    <div class="welcome-decor welcome-decor-two"></div>
-
-    <div class="welcome-card">
-      <span class="welcome-kicker">DOCES ARTESANAIS • FEITOS COM CARINHO</span>
-
-      <div class="welcome-logo-wrap">
-        <img
-          class="welcome-logo"
-          src="assets/logo-prii-doces.png"
-          alt="Logo PRII DOCES"
-        >
-      </div>
-
-      <h1>Escolha como quer<br><em>conhecer a PRII DOCES</em></h1>
-      <p>Faça seu pedido pelo cardápio ou fale diretamente com a gente.</p>
-
-      <div class="welcome-actions">
-        <a class="welcome-button welcome-button-menu" href="#cardapio">
-          <span class="welcome-button-icon">🍰</span>
-          <span><strong>Ir para o cardápio</strong><small>Veja todos os doces</small></span>
-          <b>›</b>
-        </a>
-
-        <a class="welcome-button welcome-button-whatsapp" id="welcomeWhatsApp" href="#" data-config-link="whatsapp">
-          <span class="welcome-button-icon">💬</span>
-          <span><strong>Falar no WhatsApp</strong><small>Atendimento e encomendas</small></span>
-          <b>›</b>
-        </a>
-
-        <a class="welcome-button welcome-button-instagram" id="welcomeInstagram" href="#" data-config-link="instagram">
-          <span class="welcome-button-icon">◎</span>
-          <span><strong>Ver nosso Instagram</strong><small>Fotos, novidades e lançamentos</small></span>
-          <b>›</b>
-        </a>
-      </div>
-
-      <span class="welcome-footer">PRII DOCES • UM DOCINHO PARA ADOÇAR SEU DIA ♡</span>
-    </div>
-  </section>
-
-  <!-- =========================================================
-       HEADER
-       ========================================================= -->
-  <header class="site-header">
-    <div class="container header-content">
-
-      <a class="brand" href="#" aria-label="PRII DOCES - início">
-        <img
-          class="brand-photo"
-          src="assets/perfil.jpg"
-          alt="Foto da dona da PRII DOCES"
-        >
-
-        <div class="brand-info">
-          <strong>PRII DOCES</strong>
-          <span>Doces feitos com carinho ♡</span>
-        </div>
+  <header class="landing-header">
+    <div class="landing-container nav-wrap">
+      <a class="landing-brand" href="#inicio" aria-label="PRII DOCES - início">
+        <img src="assets/logo-prii-doces.png" alt="Logo PRII DOCES">
+        <span><strong>PRII DOCES</strong><small>Doces feitos com carinho</small></span>
       </a>
-
-      <button class="cart-button" id="openCart" type="button">
-        <span class="cart-icon">🛒</span>
-        <span class="cart-label">Carrinho</span>
-        <b id="cartCount">0</b>
-      </button>
-
+      <nav class="landing-nav" aria-label="Navegação principal">
+        <a href="#sobre">Sobre</a>
+        <a href="#diferenciais">Diferenciais</a>
+        <a class="nav-cta" href="cardapio.html">Ver cardápio</a>
+      </nav>
     </div>
   </header>
 
-
   <main>
-
-    <!-- =======================================================
-         HERO
-         ======================================================= -->
-    <section class="hero-section">
-      <div class="container hero-card">
-
-        <div class="hero-content">
-          <span class="eyebrow">PRII DOCES</span>
-
-          <h1>
-            Um docinho para
-            <em>adoçar seu dia</em> ♡
-          </h1>
-
-          <p>
-            Escolha seus favoritos e monte seu pedido
-            de um jeito simples e gostoso.
-          </p>
-
-          <div class="store-status">
-            <i></i>
-            <span>Aberto agora</span>
+    <section class="landing-hero" id="inicio">
+      <div class="landing-container hero-grid">
+        <div class="hero-copy">
+          <span class="hero-kicker">DOCES ARTESANAIS • FEITOS COM CARINHO</span>
+          <h1>Um detalhe doce para deixar seu dia <em>mais especial.</em></h1>
+          <p>Receitas preparadas com cuidado, apresentação delicada e aquele sabor que faz você querer repetir.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="cardapio.html">Explorar cardápio <span>→</span></a>
+            <a class="button button-secondary" href="#sobre">Conhecer a PRII DOCES</a>
+          </div>
+          <div class="hero-proof">
+            <div><strong>Artesanal</strong><span>Produção cuidadosa</span></div>
+            <div><strong>Feito na hora</strong><span>Mais sabor e carinho</span></div>
+            <div><strong>Pedido fácil</strong><span>Direto pelo cardápio</span></div>
           </div>
         </div>
-
-        <!-- Selo com o logo enviado pela cliente -->
-        <img
-          class="hero-seal"
-          src="assets/selo-piu-doces.png"
-          alt="PRII DOCES"
-        >
-
+        <div class="hero-visual" aria-label="Apresentação da PRII DOCES">
+          <div class="visual-glow"></div>
+          <div class="visual-card main-card">
+            <img src="assets/selo-piu-doces.png" alt="Selo PRII DOCES">
+          </div>
+          <div class="visual-card mini-card mini-one"><span>♡</span><strong>Feito com carinho</strong></div>
+          <div class="visual-card mini-card mini-two"><span>✦</span><strong>Seu momento mais doce</strong></div>
+        </div>
       </div>
     </section>
 
-
-    <!-- =======================================================
-         CARDÁPIO
-         ======================================================= -->
-    <section class="menu-section" id="cardapio">
-      <div class="container">
-
-        <div class="menu-heading">
-          <div>
-            <span class="section-label">CARDÁPIO</span>
-            <h2>Escolha seus doces</h2>
-            <p>Encontre seu favorito ou pesquise pelo nome.</p>
-          </div>
-
-          <span class="opening-hours">
-            Hoje • 08:00 às 22:00
-          </span>
+    <section class="brand-story" id="sobre">
+      <div class="landing-container story-grid">
+        <div class="story-photo-wrap">
+          <div class="story-photo-frame"><img src="assets/perfil.jpg" alt="PRII DOCES"></div>
+          <span class="story-badge">PRII DOCES ♡</span>
         </div>
-
-
-        <!-- Busca -->
-        <div class="search-box">
-          <span aria-hidden="true">⌕</span>
-
-          <input
-            id="searchInput"
-            type="search"
-            placeholder="Pesquisar produto..."
-            autocomplete="off"
-            aria-label="Pesquisar produto"
-          >
+        <div class="story-copy">
+          <span class="section-kicker">NOSSA ESSÊNCIA</span>
+          <h2>Mais do que doces: pequenos momentos de carinho.</h2>
+          <p>A PRII DOCES nasceu para transformar ingredientes simples em experiências bonitas e saborosas. Cada pedido é preparado pensando nos detalhes — do sabor à apresentação.</p>
+          <p>Seja para matar a vontade de um docinho ou deixar uma ocasião mais especial, a ideia é a mesma: entregar algo feito com atenção de verdade.</p>
+          <a class="text-link" href="cardapio.html">Conheça nossos doces <span>→</span></a>
         </div>
-
-
-        <!-- Categorias -->
-        <nav class="categories" id="categories" aria-label="Categorias do cardápio">
-
-          <button class="category-button active" data-category="Todos" type="button">
-            Todos
-          </button>
-
-          <button class="category-button" data-category="Brigadeiros" type="button">
-            Brigadeiros
-          </button>
-
-          <button class="category-button" data-category="Bolos" type="button">
-            Bolos
-          </button>
-
-          <button class="category-button" data-category="Doces" type="button">
-            Doces
-          </button>
-
-          <button class="category-button" data-category="Kits" type="button">
-            Kits
-          </button>
-
-        </nav>
-
-
-        <!-- Produtos -->
-        <div class="section-title">
-          <h2>Mais pedidos</h2>
-          <span id="resultCount"></span>
-        </div>
-
-        <div class="products-grid" id="products">
-          <!-- Os produtos são renderizados pelo script.js -->
-        </div>
-
       </div>
     </section>
 
-  
-<section class="featured-section">
-  <div class="featured-heading">
-    <div>
-      <span class="section-label">DESTAQUES</span>
-      <h2>Doces que dão vontade de pedir ♡</h2>
-      <p>Clique em uma foto para ir direto ao doce.</p>
-    </div>
-    <div class="carousel-controls">
-      <button id="carouselPrev" type="button">‹</button>
-      <button id="carouselNext" type="button">›</button>
-    </div>
-  </div>
-  <div class="carousel-window" id="carouselWindow">
-    <div class="carousel-track" id="carouselTrack"></div>
-  </div>
-  <div class="carousel-dots" id="carouselDots"></div>
-</section>
-
-</main>
-
-
-  <!-- =========================================================
-       OVERLAY
-       ========================================================= -->
-  <div class="overlay" id="overlay"></div>
-
-
-  <!-- =========================================================
-       CARRINHO
-       ========================================================= -->
-  <aside class="cart-panel" id="cart" aria-label="Carrinho de compras">
-
-    <div class="cart-header">
-      <div>
-        <span class="section-label">SEU PEDIDO</span>
-        <h2>Carrinho</h2>
+    <section class="benefits" id="diferenciais">
+      <div class="landing-container">
+        <div class="section-heading">
+          <span class="section-kicker">POR QUE ESCOLHER A GENTE</span>
+          <h2>Do primeiro clique até a última mordida.</h2>
+        </div>
+        <div class="benefit-grid">
+          <article><span>01</span><h3>Receitas caprichadas</h3><p>Doces pensados para equilibrar sabor, textura e apresentação.</p></article>
+          <article><span>02</span><h3>Pedido simples</h3><p>Escolha os produtos, monte seu carrinho e finalize com praticidade.</p></article>
+          <article><span>03</span><h3>Detalhes que encantam</h3><p>Uma identidade delicada para tornar cada pedido ainda mais especial.</p></article>
+        </div>
       </div>
+    </section>
 
-      <button id="closeCart" class="close-button" type="button" aria-label="Fechar carrinho">
-        ×
-      </button>
-    </div>
-
-    <div class="cart-items" id="cartItems">
-      <!-- Itens renderizados pelo script.js -->
-    </div>
-
-    <div class="cart-footer">
-
-      <div class="cart-total">
-        <span>Total</span>
-        <strong id="cartTotal">R$ 0,00</strong>
+    <section class="menu-preview">
+      <div class="landing-container preview-card">
+        <div>
+          <span class="section-kicker">CARDÁPIO ONLINE</span>
+          <h2>Seu próximo doce favorito está a poucos cliques.</h2>
+          <p>Acesse o cardápio completo, pesquise por categoria, personalize seus doces e monte seu pedido.</p>
+          <a class="button button-light" href="cardapio.html">Abrir cardápio <span>→</span></a>
+        </div>
+        <div class="preview-seal"><img src="assets/logo-prii-doces.png" alt="PRII DOCES"></div>
       </div>
+    </section>
+  </main>
 
-      <button class="primary-button" id="checkout" type="button">
-        Continuar pedido
-      </button>
-
+  <footer class="landing-footer">
+    <div class="landing-container footer-wrap">
+      <div><strong>PRII DOCES</strong><span>Um docinho para adoçar seu dia ♡</span></div>
+      <a href="cardapio.html">Cardápio</a>
     </div>
-
-  </aside>
-
-  <!-- PERSONALIZAÇÃO DO PRODUTO -->
-  <div class="modal" id="customizationModal">
-    <div class="modal-card product-customization-card">
-      <button class="modal-close" id="closeCustomization" type="button">×</button>
-      <span class="section-label">PERSONALIZE SEU PEDIDO</span>
-      <div class="custom-product-heading">
-        <div class="custom-product-icon" id="customProductEmoji">🍫</div>
-        <div><h2 id="customProductName">Brigadeiro Gourmet</h2><p id="customProductDescription">Monte do seu jeito. Todas as opções são opcionais.</p></div>
-      </div>
-      <div class="custom-option-group"><div class="custom-option-title"><strong>Base / sabor</strong><span>Opcional</span></div><select id="customFlavor"><option value="">Não escolher</option><option>Chocolate</option><option>Ninho</option><option>Meio amargo</option></select></div>
-      <div class="custom-option-group"><div class="custom-option-title"><strong>Recheio</strong><span>Opcional</span></div><select id="customFilling"><option value="">Sem recheio</option><option>Nutella</option><option>Morango</option><option>Coco</option></select></div>
-      <div class="custom-option-group"><div class="custom-option-title"><strong>Finalização</strong><span>Opcional</span></div><select id="customTopping"><option value="">Não escolher</option><option>Granulado</option><option>Leite Ninho</option><option>Paçoca</option><option>Coco</option></select></div>
-      <div class="custom-quantity-row"><div><strong>Quantidade</strong><span>Escolha quantos deseja adicionar</span></div><div class="custom-quantity-controls"><button id="customQuantityMinus" type="button">−</button><strong id="customQuantity">1</strong><button id="customQuantityPlus" type="button">+</button></div></div>
-      <button class="primary-button" id="confirmCustomization" type="button">Adicionar ao carrinho</button>
-      <button class="text-button" id="skipCustomization" type="button">Continuar sem personalizar</button>
-    </div>
-  </div>
-
-
-  <!-- =========================================================
-       MODAL DE FINALIZAÇÃO
-       ========================================================= -->
-  <div class="modal" id="checkoutModal">
-
-    <div class="modal-card">
-
-      <button
-        class="modal-close"
-        id="closeCheckout"
-        type="button"
-        aria-label="Fechar"
-      >
-        ×
-      </button>
-
-      <span class="section-label">FINALIZAR PEDIDO</span>
-
-      <h2>Vamos preparar seu pedido ♡</h2>
-
-      <label>
-        Seu nome
-        <input id="customerName" type="text" placeholder="Digite seu nome">
-      </label>
-
-      <label>
-        Forma de pagamento
-        <select id="payment">
-          <option value="Pix">Pix</option>
-          <option value="Cartão">Cartão</option>
-          <option value="Dinheiro">Dinheiro</option>
-        </select>
-      </label>
-
-
-      <div class="cash-change-box" id="cashChangeBox" hidden>
-        <label>
-          Troco para quanto?
-          <input id="changeFor" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Ex.: 50,00">
-        </label>
-        <p id="changePreview" class="change-preview">Informe o valor que você vai entregar.</p>
-      </div>
-
-      <label>
-        Endereço / observação
-        <textarea
-          id="address"
-          rows="3"
-          placeholder="Endereço para entrega ou observações"
-        ></textarea>
-      </label>
-
-      <button class="primary-button" id="whatsappOrder" type="button">
-        Enviar pedido pelo WhatsApp
-      </button>
-
-      <small>
-        O número do WhatsApp será configurado na próxima etapa.
-      </small>
-
-    </div>
-
-  </div>
-
-
-  <!-- =========================================================
-       FOOTER
-       ========================================================= -->
-  <footer class="site-footer">
-    <strong>PRII DOCES</strong>
-    <span>Feito com carinho ♡</span>
   </footer>
-
-
-  <!-- JavaScript principal -->
-  <script src="script.js"></script>
-
 </body>
 </html>

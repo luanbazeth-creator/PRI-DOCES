@@ -1,3 +1,19 @@
+/*
+=================================================================
+ARQUIVO JAVASCRIPT DOCUMENTADO
+
+Fluxo da aplicação:
+1. Configurações
+2. Produtos
+3. Renderização
+4. Carrinho
+5. Eventos
+6. Finalização do pedido
+
+Adicione novas funções mantendo este padrão.
+=================================================================
+*/
+
 /* ============================================================
    PIU DOCES | SCRIPT.JS
    Organização:
@@ -704,8 +720,7 @@ renderCart();
 const PRII_CONTACTS = {
   // Coloque o número com DDI + DDD, somente números. Ex.: 5522999999999
   whatsapp: "",
-  // Ex.: https://www.instagram.com/seuusuario/
-  instagram: ""
+  // Ex.: https://www.instagram.com/priicardosodoces?igsh=MTE0YnF0MHFzcXJ6Ng==: ""
 };
 
 function setupWelcomeLinks() {
@@ -719,7 +734,7 @@ function setupWelcomeLinks() {
         alert("O WhatsApp ainda não foi configurado. Me passe o número da loja para eu colocar o link.");
         return;
       }
-      window.open(`https://wa.me/${PRII_CONTACTS.whatsapp}`, "_blank");
+        window.open(`https://wa.me/${5522999609681}`, "_blank");
     });
   }
 

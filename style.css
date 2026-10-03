@@ -1,3 +1,18 @@
+/*
+=================================================================
+ARQUIVO CSS DOCUMENTADO
+
+Organização sugerida:
+01. Reset
+02. Variáveis
+03. Layout
+04. Componentes
+05. Responsividade
+
+Altere cores, espaçamentos e fontes aqui.
+=================================================================
+*/
+
 /* ============================================================
    PIU DOCES | STYLE.CSS
    Organização:
@@ -1241,3 +1256,7 @@ h3 {
 .product-card.product-highlight{animation:productHighlight 1.8s ease}
 @keyframes productHighlight{0%,100%{transform:translateY(0)}35%{transform:translateY(-5px);box-shadow:0 0 0 4px #f0c8d1,0 18px 40px rgba(117,67,55,.15)}}
 @media(max-width:600px){.featured-section{margin-left:14px;margin-right:14px}.featured-heading h2{font-size:24px}.carousel-card{flex-basis:210px;height:185px}}
+
+/* Separação site institucional / cardápio */
+.header-actions{display:flex;align-items:center;gap:10px}.header-home-link{display:inline-flex;align-items:center;height:40px;padding:0 14px;border:1px solid var(--border-color);border-radius:12px;background:#fff;color:var(--color-wine);font-size:12px;font-weight:800;text-decoration:none;transition:.2s}.header-home-link:hover{transform:translateY(-1px);border-color:var(--color-pink-strong)}
+@media(max-width:600px){.header-home-link{display:none}}
