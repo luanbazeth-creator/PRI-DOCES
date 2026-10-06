@@ -218,7 +218,7 @@ function createProductCard(product) {
     : "";
 
   return `
-    <article class="product-card">
+    <article class="product-card" data-product-id="${product.id}">
 
       <div class="product-image">
         ${product.emoji}
@@ -544,7 +544,7 @@ function sendOrderToWhatsApp() {
     const whatsappNumber = "5522999999999";
   */
 
-    const whatsappNumber = PRII_CONTACTS.whatsapp || "5522999609681";
+  const whatsappNumber = PRII_CONTACTS.whatsapp || "5500000000000";
 
 
   const orderItems = cartItemsState
@@ -783,9 +783,10 @@ function setupCarousel(){
  if(!t||!v)return;
  document.getElementById("carouselPrev").onclick=()=>{goCarousel(carouselIndex-1);startCarousel()};
  document.getElementById("carouselNext").onclick=()=>{goCarousel(carouselIndex+1);startCarousel()};
- t.onclick=e=>{const c=e.target.closest(".carousel-card");if(!c)return;const p=products.find(x=>x.id===Number(c.dataset.productId));if(!p)return;selectedCategory=p.category;elements.searchInput.value="";renderProducts();setTimeout(()=>{const target=document.querySelector(`.product-card[data-product-id="${p.id}"]`);target?.scrollIntoView({behavior:"smooth",block:"center"});target?.classList.add("product-highlight");setTimeout(()=>target?.classList.remove("product-highlight"),1800)},80)};
+ t.onclick=e=>{const c=e.target.closest(".carousel-card");if(!c)return;const p=products.find(x=>x.id===Number(c.dataset.productId));if(!p)return;selectedCategory=p.category;elements.searchInput.value="";document.querySelectorAll(".category-button").forEach(b=>b.classList.toggle("active",b.dataset.category===p.category));renderProducts();setTimeout(()=>{const target=document.querySelector(`.product-card[data-product-id="${p.id}"]`);target?.scrollIntoView({behavior:"smooth",block:"center"});target?.classList.add("product-highlight");setTimeout(()=>target?.classList.remove("product-highlight"),1800)},80)};
  document.getElementById("carouselDots").onclick=e=>{const d=e.target.closest(".carousel-dot");if(d){goCarousel(Number(d.dataset.carouselIndex));startCarousel()}};
  v.onmouseenter=()=>clearInterval(carouselTimer);v.onmouseleave=startCarousel;
+t.addEventListener("keydown",e=>{const c=e.target.closest(".carousel-card");if(!c||!((e.key==="Enter")||(e.key===" ")))return;e.preventDefault();c.click()});
 }
 function updatePaymentFieldsV5(){
  const cash=elements.payment.value==="Dinheiro";
