@@ -6,4 +6,4 @@ morango-do-amor.jpg
 bolo-de-pote.jpg
 kit-festa.jpg
 
-Os nomes/produtos podem ser alterados no array carouselItems do script.js.
+Os nomes/produtos podem ser alterados no array carouselItems do js/cardapio.js.
