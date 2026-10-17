@@ -2,95 +2,103 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f8dce6">
-  <meta name="description" content="PRII DOCES — cardápio, encomendas, retirada e entrega de doces artesanais.">
-  <title>PRII DOCES | Links e cardápio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#35150d">
+  <meta name="description" content="PRII DOCES — encomendas, estações e sobremesas artesanais feitas com carinho.">
+  <title>PRII DOCES | Links oficiais</title>
 
-  <!-- Fontes usadas na página de links. -->
+  <!-- Fontes usadas na identidade visual da PRII DOCES. -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 
-  <!-- CSS separado: toda a aparência da primeira tela fica neste arquivo. -->
+  <!-- O CSS permanece separado do HTML para facilitar futuras alterações. -->
   <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
-  <!-- Marca d'água decorativa: o PNG tem fundo transparente. -->
-  <div class="background-mark" aria-hidden="true">
-    <img src="assets/logo-prii-doces.png" alt="">
-  </div>
-
   <main class="link-page" id="inicio">
-    <!-- Perfil principal, no estilo de uma página de links. -->
-    <header class="profile-header">
-      <div class="profile-photo-wrap">
-        <img class="profile-photo" src="assets/perfil.jpg" alt="Foto da PRII DOCES">
-        <span class="profile-heart" aria-hidden="true">♡</span>
+    <!-- Cabeçalho da loja: foto de perfil, logo e frase de apresentação. -->
+    <header class="store-header">
+      <div class="profile-picture">
+        <img src="assets/perfil.jpg" alt="Perfil da PRII DOCES">
       </div>
 
-      <img class="profile-logo" src="assets/logo-prii-doces.png" alt="PRII DOCES">
-      <h1>PRII DOCES</h1>
-      <p class="profile-tagline">Um docinho para adoçar seu dia ♡</p>
-      <p class="profile-description">Doces artesanais preparados com carinho para deixar seus momentos ainda mais especiais.</p>
+      <img class="store-logo" src="assets/logo-prii-doces.png" alt="Logo PRII DOCES">
+      <p class="store-description">Pâtisserie • Doces artesanais feitos com carinho</p>
     </header>
 
-    <!-- Links principais: troque o endereço do Instagram pelo perfil oficial da loja. -->
-    <nav class="main-links" aria-label="Links principais da PRII DOCES">
-      <a class="link-button link-button-primary" href="cardapio.html">
+    <!-- Fotos reais das estações. As imagens ficam em assets/. -->
+    <section class="photo-gallery" aria-label="Conheça as estações da PRII DOCES">
+      <!-- Cada foto abre o WhatsApp com uma mensagem pronta perguntando pela disponibilidade. -->
+      <a class="photo-card photo-acai"
+         href="https://wa.me/5522999609681?text=Ol%C3%A1%2C%20tudo%20bem%3F%20%F0%9F%92%97%20Vi%20a%20Esta%C3%A7%C3%A3o%20de%20A%C3%A7a%C3%AD%20da%20PRII%20DOCES%20e%20gostaria%20de%20saber%20se%20ela%20est%C3%A1%20dispon%C3%ADvel%20para%20a%20data%20do%20meu%20evento.%20Poderiam%20me%20enviar%20as%20informa%C3%A7%C3%B5es%20e%20os%20valores%2C%20por%20favor%3F%20Muito%20obrigada%21%20%F0%9F%8D%93"
+         target="_blank" rel="noopener noreferrer" aria-label="Perguntar pelo WhatsApp se a Estação de Açaí está disponível">
+        <img src="assets/estacao-acai.jpeg" alt="Estação de açaí com frutas e acompanhamentos">
+        <span class="photo-caption">Açaí Estação ♡</span>
+      </a>
+
+      <a class="photo-card photo-fondue"
+         href="https://wa.me/5522999609681?text=Ol%C3%A1%2C%20tudo%20bem%3F%20%F0%9F%8D%AB%F0%9F%92%97%20Gostaria%20de%20saber%20se%20a%20Esta%C3%A7%C3%A3o%20de%20Fondue%20da%20PRII%20DOCES%20est%C3%A1%20dispon%C3%ADvel%20para%20a%20data%20do%20meu%20evento.%20Poderiam%20me%20passar%20os%20detalhes%2C%20op%C3%A7%C3%B5es%20e%20valores%3F%20Agrade%C3%A7o%20desde%20j%C3%A1%21%20%E2%9C%A8"
+         target="_blank" rel="noopener noreferrer" aria-label="Perguntar pelo WhatsApp se a Estação de Fondue está disponível">
+        <img src="assets/estacao-fondue.jpeg" alt="Estação de fondue de chocolate e frutas">
+        <span class="photo-caption">Estação Fondue</span>
+      </a>
+
+      <!-- Terceira foto: também abre uma mensagem pronta sobre disponibilidade do fondue. -->
+      <a class="photo-card photo-fondue-experience"
+         href="https://wa.me/5522999609681?text=Ol%C3%A1%21%20%F0%9F%92%97%20Vi%20a%20experi%C3%AAncia%20de%20Fondue%20da%20PRII%20DOCES%20e%20achei%20uma%20del%C3%ADcia%21%20Gostaria%20de%20consultar%20a%20disponibilidade%20para%20a%20data%20do%20meu%20evento%20e%20receber%20mais%20informa%C3%A7%C3%B5es%20sobre%20as%20op%C3%A7%C3%B5es%20e%20valores.%20Obrigada%21%20%F0%9F%8D%93%F0%9F%8D%AB"
+         target="_blank" rel="noopener noreferrer" aria-label="Perguntar pelo WhatsApp sobre disponibilidade da experiência de Fondue">
+        <img src="assets/estacao-fondue-experiencia.jpeg" alt="Estação de fondue com fonte de chocolate, frutas e acompanhamentos">
+        <span class="photo-caption">Experiência Fondue ♡</span>
+      </a>
+    </section>
+
+    <!-- Links principais. A ordem dos botões é intencional e deve ser mantida. -->
+    <nav class="main-links" aria-label="Links da PRII DOCES">
+      <!-- 1. Abre o cardápio completo. -->
+      <a class="main-link main-link-primary" href="cardapio.html">
         <span class="link-icon" aria-hidden="true">♡</span>
-        <span><strong>Ver cardápio e fazer pedido</strong><small>Escolha seus doces favoritos</small></span>
+        <span class="link-label">Nosso delivery</span>
         <span class="link-arrow" aria-hidden="true">↗</span>
       </a>
 
-      <a class="link-button" href="https://www.instagram.com/priicardosodoces?igsh=MTE0YnF0MHFzcXJ6Ng==/" target="_blank" rel="noopener noreferrer">
-        <span class="link-icon" aria-hidden="true">◎</span>
-        <span><strong>Instagram da PRII DOCES</strong><small>Fotos, novidades e lançamentos</small></span>
+      <!-- 2. Direciona para as estações no cardápio. -->
+      <a class="main-link" href="cardapio.html?categoria=Estações#cardapio">
+        <span class="link-icon" aria-hidden="true">✿</span>
+        <span class="link-label">Estações</span>
         <span class="link-arrow" aria-hidden="true">↗</span>
       </a>
 
-      <a class="link-button" href="#entrega-retirada">
-        <span class="link-icon" aria-hidden="true">⌖</span>
-        <span><strong>Retirada no local e entrega</strong><small>Confira as opções para receber seu pedido</small></span>
-        <span class="link-arrow" aria-hidden="true">↓</span>
+      <!-- 3. Direciona para as sobremesas no cardápio. -->
+      <a class="main-link" href="cardapio.html?categoria=Sobremesas#cardapio">
+        <span class="link-icon" aria-hidden="true">🍰</span>
+        <span class="link-label">Sobremesas</span>
+        <span class="link-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <!-- 4. Link oficial do Instagram da PRII DOCES. -->
+      <a class="main-link" href="https://www.instagram.com/priicardosodoces?igsh=MTE0YnF0MHFzcXJ6Ng==" target="_blank" rel="noopener noreferrer">
+        <span class="link-icon instagram-icon" aria-hidden="true">◎</span>
+        <span class="link-label">Siga o Instagram</span>
+        <span class="link-arrow" aria-hidden="true">↗</span>
+      </a>
+
+      <!-- 5. Link direto para conversar com a PRII DOCES no WhatsApp. -->
+      <a class="main-link" href="https://wa.me/5522999609681" target="_blank" rel="noopener noreferrer">
+        <span class="link-icon whatsapp-icon" aria-hidden="true">◔</span>
+        <span class="link-label">Nosso WhatsApp</span>
+        <span class="link-arrow" aria-hidden="true">↗</span>
       </a>
     </nav>
 
-    <!-- Categorias: cada botão abre o cardápio já filtrado pela categoria escolhida. -->
-    <section class="category-section" aria-labelledby="category-title">
-      <div class="section-heading">
-        <span class="section-kicker">ESCOLHA SUA VONTADE</span>
-        <h2 id="category-title">O que vai adoçar seu dia?</h2>
-        <p>Toque em uma categoria para ir direto aos produtos.</p>
-      </div>
-
-      <div class="category-links">
-        <a class="category-link" href="cardapio.html?categoria=Sobremesas%20geladas#cardapio"><span>🍨</span><strong>Sobremesas geladas</strong><i>↗</i></a>
-        <a class="category-link" href="cardapio.html?categoria=Caixas%20de%204%20a%2012#cardapio"><span>🎁</span><strong>Caixas de 4 a 12</strong><i>↗</i></a>
-        <a class="category-link" href="cardapio.html?categoria=Brownies#cardapio"><span>🍫</span><strong>Brownies</strong><i>↗</i></a>
-        <a class="category-link" href="cardapio.html?categoria=Bebidas#cardapio"><span>🥤</span><strong>Bebidas</strong><i>↗</i></a>
-        <a class="category-link" href="cardapio.html?categoria=Sobremesas#cardapio"><span>🍰</span><strong>Sobremesas</strong><i>↗</i></a>
-        <a class="category-link" href="cardapio.html?categoria=Sorvete%20artesanal#cardapio"><span>🍦</span><strong>Sorvete artesanal</strong><i>↗</i></a>
-      </div>
+    <!-- Informação resumida: a opção e o frete são definidos na finalização do pedido. -->
+    <section class="delivery-info" aria-label="Informações de entrega">
+      <p><span aria-hidden="true">🏍</span> Entrega com frete conforme a região</p>
+      <p><span aria-hidden="true">⌖</span> Retirada no local disponível</p>
     </section>
 
-    <!-- Informações de entrega: o valor mínimo exato deve ser configurado pela loja. -->
-    <section class="delivery-card" id="entrega-retirada" aria-labelledby="delivery-title">
-      <div class="delivery-icon" aria-hidden="true">♡</div>
-      <div class="delivery-copy">
-        <span class="section-kicker">COMO RECEBER</span>
-        <h2 id="delivery-title">Entrega ou retirada?</h2>
-        <div class="delivery-option"><strong>🚗 Entrega</strong><p>O frete é de R$ 3.00.</p></div>
-        <div class="delivery-option"><strong>📍 Retirada no local</strong><p>Disponível mediante combinação do horário e local de retirada.</p></div>
-        <p class="minimum-order"><strong>Pedido mínimo para entrega:</strong> consulte as condições antes de finalizar o pedido.</p>
-      </div>
-    </section>
-
-    <!-- Rodapé curto, como em páginas de links para celular. -->
     <footer class="page-footer">
-      <img src="assets/logo-prii-doces.png" alt="" aria-hidden="true">
-      <p>Feito com carinho pela <strong>PRII DOCES</strong></p>
-      <a href="cardapio.html">Acessar cardápio completo →</a>
+      <p>PRII DOCES <span aria-hidden="true">•</span> Um toque de carinho em cada doce.</p>
     </footer>
   </main>
 </body>

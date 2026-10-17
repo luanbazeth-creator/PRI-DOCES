@@ -777,15 +777,40 @@ h3 {
   font-weight: 800;
 }
 
+.product-add-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Número visível antes do botão +: 0 quando ainda não adicionou, 1, 2... depois. */
+.product-cart-quantity {
+  display: inline-grid;
+  min-width: 25px;
+  height: 25px;
+  padding: 0 5px;
+  place-items: center;
+  border: 1px solid var(--color-border, #ead7d9);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--color-muted, #7a6569);
+  font-size: 13px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.product-cart-quantity.has-quantity {
+  border-color: var(--color-wine);
+  background: #fff0f3;
+  color: var(--color-wine);
+}
+
 .add-product {
   width: 35px;
   height: 35px;
-
   border-radius: 12px;
-
   background: var(--color-wine);
   color: #fff;
-
   font-size: 20px;
 }
 
@@ -1076,6 +1101,19 @@ h3 {
 }
 
 
+
+/* Informação de frete na finalização do pedido */
+.checkout-delivery-note {
+  margin: -4px 0 14px;
+  padding: 10px 12px;
+  border: 1px solid #ead5d2;
+  border-radius: 10px;
+  background: #fff8f6;
+  color: #76564f;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
 /* ============================================================
    09. FOOTER
    ============================================================ */
@@ -1270,3 +1308,42 @@ h3 {
 /* Separação site institucional / cardápio */
 .header-actions{display:flex;align-items:center;gap:10px}.header-home-link{display:inline-flex;align-items:center;height:40px;padding:0 14px;border:1px solid var(--border-color);border-radius:12px;background:#fff;color:var(--color-wine);font-size:12px;font-weight:800;text-decoration:none;transition:.2s}.header-home-link:hover{transform:translateY(-1px);border-color:var(--color-pink-strong)}
 @media(max-width:600px){.header-home-link{display:none}}
+
+
+/* ============================================================
+   RESUMO DO PEDIDO — subtotal, frete e total final
+   ============================================================ */
+.checkout-total-box {
+  display: grid;
+  gap: 10px;
+  margin: 4px 0 18px;
+  padding: 16px;
+  border: 1px solid #ead5d8;
+  border-radius: 14px;
+  background: #fff7f8;
+}
+.checkout-total-box > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  color: var(--color-muted);
+  font-size: 13px;
+}
+.checkout-total-box strong {
+  color: var(--color-text);
+  font-size: 14px;
+  white-space: nowrap;
+}
+.checkout-total-box .checkout-grand-total {
+  margin-top: 3px;
+  padding-top: 12px;
+  border-top: 1px solid #e8cbd1;
+  color: var(--color-wine-dark);
+  font-size: 15px;
+  font-weight: 800;
+}
+.checkout-total-box .checkout-grand-total strong {
+  color: var(--color-wine-dark);
+  font-size: 21px;
+}

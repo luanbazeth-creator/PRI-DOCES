@@ -325,12 +325,32 @@ Procure pelos comentários ===== para localizar cada área.
         <p id="changePreview" class="change-preview">Informe o valor que você vai entregar.</p>
       </div>
 
+      <!-- Cliente escolhe entrega ou retirada antes de enviar o pedido. -->
+      <label>
+        Como deseja receber?
+        <select id="deliveryMethod">
+          <option value="Entrega com frete">Entrega com frete</option>
+          <option value="Retirada no local">Retirada no local</option>
+        </select>
+      </label>
+
+      <p class="checkout-delivery-note" id="deliveryMethodNote">
+        A taxa fixa de entrega é R$ 3,00. Na retirada no local, não há taxa.
+      </p>
+
+      <!-- Resumo financeiro atualizado conforme a forma de recebimento escolhida. -->
+      <section class="checkout-total-box" aria-label="Resumo do pedido">
+        <div><span>Subtotal dos produtos</span><strong id="checkoutSubtotal">R$ 0,00</strong></div>
+        <div><span>Taxa de entrega</span><strong id="checkoutDeliveryFee">R$ 3,00</strong></div>
+        <div class="checkout-grand-total"><span>Total do pedido</span><strong id="checkoutGrandTotal">R$ 3,00</strong></div>
+      </section>
+
       <label>
         Endereço / observação
         <textarea
           id="address"
           rows="3"
-          placeholder="Endereço para entrega ou observações"
+          placeholder="Informe o endereço para entrega ou escreva uma observação (opcional para retirada)"
         ></textarea>
       </label>
 
@@ -339,7 +359,7 @@ Procure pelos comentários ===== para localizar cada área.
       </button>
 
       <small>
-        O número do WhatsApp será configurado na próxima etapa.
+        O total exibido inclui a taxa de entrega quando você escolher receber em casa.
       </small>
 
     </div>

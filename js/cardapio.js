@@ -125,6 +125,9 @@ let selectedCategory = "Todos";
 
 let customizationState = { product: null, quantity: 1 };
 
+// Taxa fixa cobrada somente quando o cliente escolhe entrega.
+const DELIVERY_FEE = 3.00;
+
 
 /* ============================================================
    03. SELETORES DO DOM
@@ -257,14 +260,18 @@ function createProductCard(product) {
             ${formatCurrency(product.price)}
           </span>
 
-          <button
-            class="add-product"
-            type="button"
-            onclick="handleProductSelection(${product.id})"
-            aria-label="Adicionar ${product.name}"
-          >
-            +
-          </button>
+          <!-- Mostra a quantidade desse produto que já está no carrinho. -->
+          <div class="product-add-controls">
+            <span class="product-cart-quantity" data-quantity-for="${product.id}" aria-label="Quantidade no carrinho">${getProductQuantity(product.id)}</span>
+            <button
+              class="add-product"
+              type="button"
+              onclick="handleProductSelection(${product.id})"
+              aria-label="Adicionar ${product.name} ao carrinho"
+            >
+              +
+            </button>
+          </div>
 
         </div>
 
@@ -293,7 +300,7 @@ function openCustomization(product) {
   customizationState = { product, quantity: 1 };
   elements.customProductEmoji.textContent = product.emoji;
   elements.customProductName.textContent = product.name;
-  elements.customProductDescription.textContent = "Monte do seu jeito. Todas as opções são opcionais.";
+  elements.customProductDescription.textContent = "Monte do seu jeito, escolha a quantidade e adicione outras combinações ao carrinho quando quiser. Todas as opções são opcionais.";
   elements.customFlavor.value = "";
   elements.customFilling.value = "";
   elements.customTopping.value = "";
@@ -334,12 +341,30 @@ function confirmProductCustomization() {
 
 function addCustomizedProductWithoutOptions() {
   if (!customizationState.product) return;
-  addToCart(customizationState.product, 1, {});
+
+  // Mesmo sem escolher sabor/recheio, respeita a quantidade escolhida no modal.
+  addToCart(customizationState.product, customizationState.quantity, {});
   closeCustomization();
 }
 
 function createCartId(productId, customization) {
   return `${productId}-${JSON.stringify(customization)}`;
+}
+
+// Soma todas as versões do mesmo produto, inclusive as personalizadas.
+function getProductQuantity(productId) {
+  return cartItemsState
+    .filter((item) => item.productId === productId)
+    .reduce((total, item) => total + item.quantity, 0);
+}
+
+// Atualiza os números ao lado do botão + em todos os cards visíveis.
+function updateProductQuantityBadges() {
+  document.querySelectorAll("[data-quantity-for]").forEach((badge) => {
+    const productId = Number(badge.dataset.quantityFor);
+    badge.textContent = getProductQuantity(productId);
+    badge.classList.toggle("has-quantity", getProductQuantity(productId) > 0);
+  });
 }
 
 function addToCart(product, quantity = 1, customization = {}) {
@@ -395,11 +420,15 @@ function calculateCartQuantity() {
 
 
 function renderCart() {
+  // Mantém a quantidade dos cards sincronizada com o carrinho.
+  updateProductQuantityBadges();
+
   const totalQuantity = calculateCartQuantity();
   const totalPrice = calculateCartTotal();
 
   elements.cartCount.textContent = totalQuantity;
   elements.cartTotal.textContent = formatCurrency(totalPrice);
+  updateCheckoutSummary();
 
   elements.checkoutButton.disabled =
     cartItemsState.length === 0;
@@ -531,56 +560,62 @@ function getChangeForValue() {
    ============================================================ */
 
 function sendOrderToWhatsApp() {
-  const name =
-    document.getElementById("customerName").value.trim();
+  const name = document.getElementById("customerName").value.trim();
+  const payment = document.getElementById("payment").value;
+  const address = document.getElementById("address").value.trim();
+  const deliveryMethod = document.getElementById("deliveryMethod").value;
+  const isDelivery = deliveryMethod === "Entrega com frete";
 
-  const payment =
-    document.getElementById("payment").value;
-
-  const address =
-    document.getElementById("address").value.trim();
-
-
-  if (!name || !address) {
-    alert("Preencha seu nome e endereço/observação.");
+  // Para entrega, o endereço é obrigatório. Na retirada, ele é opcional.
+  if (!name) {
+    alert("Preencha seu nome para continuar.");
     return;
   }
 
+  if (isDelivery && !address) {
+    alert("Informe o endereço para a entrega.");
+    return;
+  }
 
   /*
-    ATENÇÃO:
-    Na próxima etapa coloque aqui o WhatsApp real da loja.
-
-    Exemplo:
-    const whatsappNumber = "5522999999999";
+    CONFIGURAÇÃO:
+    Coloque aqui o WhatsApp real da loja, com DDI + DDD e somente números.
+    Exemplo: const whatsappNumber = "5522999999999";
   */
-
   const whatsappNumber = PRII_CONTACTS.whatsapp || "5500000000000";
 
-
   const orderItems = cartItemsState
-    .map((item) => {
-      return `• ${item.quantity}x ${item.name} — ${formatCurrency(item.price * item.quantity)}`;
-    })
+    .map((item) => `• ${item.quantity}x ${item.name} — ${formatCurrency(item.price * item.quantity)}`)
     .join("\n");
 
+  const deliveryFee = isDelivery ? DELIVERY_FEE : 0;
+  const orderTotal = calculateCartTotal() + deliveryFee;
+  const deliveryDetails = isDelivery
+    ? `Taxa de entrega: ${formatCurrency(DELIVERY_FEE)}.`
+    : "Taxa de entrega: R$ 0,00 (retirada no local).";
+
+  const locationDetails = address
+    ? address
+    : "Retirada no local; sem endereço informado.";
 
   const message = `
 🍰 *NOVO PEDIDO — PRII DOCES*
 
-👤 Nome: ${name}
+👤 *Nome:* ${name}
 
 🧁 *Pedido:*
 ${orderItems}
 
-💰 *Total:* ${formatCurrency(calculateCartTotal())}
+💰 *Subtotal dos produtos:* ${formatCurrency(calculateCartTotal())}
+🚚 *Forma de recebimento:* ${deliveryMethod}
+${deliveryDetails}
+💵 *TOTAL DO PEDIDO:* ${formatCurrency(orderTotal)}
 
 💳 *Pagamento:* ${payment}
 
 📍 *Endereço / observação:*
-${address}
+${locationDetails}
   `.trim();
-
 
   const whatsappUrl =
     `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
@@ -718,6 +753,15 @@ document
   .getElementById("whatsappOrder")
   .addEventListener("click", sendOrderToWhatsApp);
 
+/* Atualiza a explicação de frete quando o cliente troca a opção. */
+const deliveryMethodSelect = document.getElementById("deliveryMethod");
+const deliveryMethodNote = document.getElementById("deliveryMethodNote");
+
+if (deliveryMethodSelect) {
+  deliveryMethodSelect.addEventListener("change", updateCheckoutSummary);
+}
+
+
 
 /* ============================================================
    09. INICIALIZAÇÃO
@@ -755,10 +799,10 @@ applyCategoryFromUrl();
 
 /* ================= PRII DOCES | LINKS DA CAPA ================= */
 const PRII_CONTACTS = {
-  // Coloque o número com DDI + DDD, somente números. Ex.: 5522999999999
-  whatsapp: "",
-  // Ex.: https://www.instagram.com/seuusuario/
-  instagram: ""
+  // Número oficial com DDI + DDD, somente números.
+  whatsapp: "5522999609681",
+  // Perfil oficial da PRII DOCES.
+  instagram: "https://www.instagram.com/priicardosodoces?igsh=MTE0YnF0MHFzcXJ6Ng=="
 };
 
 function setupWelcomeLinks() {
@@ -825,6 +869,42 @@ function setupCarousel(){
  v.onmouseenter=()=>clearInterval(carouselTimer);v.onmouseleave=startCarousel;
 t.addEventListener("keydown",e=>{const c=e.target.closest(".carousel-card");if(!c||!((e.key==="Enter")||(e.key===" ")))return;e.preventDefault();c.click()});
 }
+/* ============================================================
+   08. RESUMO DO PEDIDO E TAXA DE ENTREGA
+   ============================================================ */
+
+// O subtotal contém apenas os produtos; o frete entra no total final.
+function calculateCheckoutTotal() {
+  const deliveryMethod = document.getElementById("deliveryMethod")?.value;
+  const fee = deliveryMethod === "Entrega com frete" ? DELIVERY_FEE : 0;
+  return calculateCartTotal() + fee;
+}
+
+function updateCheckoutSummary() {
+  const deliveryMethod = document.getElementById("deliveryMethod")?.value;
+  const isDelivery = deliveryMethod === "Entrega com frete";
+  const subtotal = calculateCartTotal();
+  const fee = isDelivery ? DELIVERY_FEE : 0;
+  const total = subtotal + fee;
+
+  const subtotalElement = document.getElementById("checkoutSubtotal");
+  const feeElement = document.getElementById("checkoutDeliveryFee");
+  const totalElement = document.getElementById("checkoutGrandTotal");
+  const note = document.getElementById("deliveryMethodNote");
+
+  if (subtotalElement) subtotalElement.textContent = formatCurrency(subtotal);
+  if (feeElement) feeElement.textContent = formatCurrency(fee);
+  if (totalElement) totalElement.textContent = formatCurrency(total);
+
+  if (note) {
+    note.textContent = isDelivery
+      ? `Taxa fixa de entrega: ${formatCurrency(DELIVERY_FEE)}. O valor já está incluído no total abaixo.`
+      : "Retirada no local sem taxa de entrega. O total abaixo inclui somente os produtos.";
+  }
+
+  updateChangePreviewV5();
+}
+
 function updatePaymentFieldsV5(){
  const cash=elements.payment.value==="Dinheiro";
  elements.cashChangeBox.hidden=!cash;
@@ -833,8 +913,9 @@ function updatePaymentFieldsV5(){
 }
 function updateChangePreviewV5(){
  if(elements.payment.value!=="Dinheiro")return;
- const amount=Number(elements.changeFor.value.replace(",",".")),total=calculateCartTotal();
- if(!elements.changeFor.value||!Number.isFinite(amount)||amount<=0){elements.changePreview.textContent="Digite quanto o cliente vai entregar.";elements.changePreview.className="change-preview";return}
+ const rawAmount=elements.changeFor.value.replace(",",".");
+ const amount=Number(rawAmount),total=calculateCheckoutTotal();
+ if(!rawAmount||!Number.isFinite(amount)||amount<=0){elements.changePreview.textContent="Digite quanto o cliente vai entregar.";elements.changePreview.className="change-preview";return}
  if(amount<total){elements.changePreview.textContent=`Valor insuficiente. Faltam ${formatCurrency(total-amount)}.`;elements.changePreview.className="change-preview invalid";return}
  elements.changePreview.textContent=`Troco: ${formatCurrency(amount-total)}`;elements.changePreview.className="change-preview valid";
 }
@@ -842,6 +923,7 @@ function initV5(){
  renderCarousel();setupCarousel();updatePaymentFieldsV5();updateCarousel();startCarousel();
  elements.payment.addEventListener("change",updatePaymentFieldsV5);
  elements.changeFor.addEventListener("input",updateChangePreviewV5);
+ updateCheckoutSummary();
  document.querySelectorAll(".product-card").forEach(c=>{if(c.dataset.productId)return});
 }
 if(document.readyState==="loading")document.addEventListener("DOMContentLoaded",initV5);else initV5();
