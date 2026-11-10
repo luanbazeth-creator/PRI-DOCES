@@ -473,16 +473,28 @@ function createCartItem(item) {
         <h4>${item.name}</h4>
         <p>${formatCurrency(item.price)} cada</p>
         ${customizationLabel ? `<p class="cart-customization">${customizationLabel}</p>` : ""}
-        <div class="quantity-controls">
-          <button type="button" onclick="changeQuantity('${item.cartId}', -1)">−</button>
-          <strong>${item.quantity}</strong>
-          <button type="button" onclick="changeQuantity('${item.cartId}', 1)">+</button>
+        <div class="quantity-controls" aria-label="Alterar quantidade de ${item.name}">
+          <button type="button" data-cart-action="decrease" data-cart-id="${encodeURIComponent(item.cartId)}" aria-label="Diminuir quantidade de ${item.name}">−</button>
+          <strong aria-live="polite">${item.quantity}</strong>
+          <button type="button" data-cart-action="increase" data-cart-id="${encodeURIComponent(item.cartId)}" aria-label="Aumentar quantidade de ${item.name}">+</button>
         </div>
       </div>
       <strong>${formatCurrency(item.price * item.quantity)}</strong>
     </div>
   `;
 }
+
+// Usa delegação de eventos para que os botões continuem funcionando
+// após o carrinho ser redesenhado. Também evita problemas com aspas
+// nas opções de personalização do produto.
+elements.cartItems.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-cart-action][data-cart-id]");
+  if (!button) return;
+
+  const cartId = decodeURIComponent(button.dataset.cartId);
+  const amount = button.dataset.cartAction === "increase" ? 1 : -1;
+  changeQuantity(cartId, amount);
+});
 
 
 /* ============================================================

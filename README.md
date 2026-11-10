@@ -145,3 +145,19 @@ Os atalhos da página inicial abrem o `cardapio.html` com a categoria selecionad
 ## Quantidade de doces personalizados
 
 No modal de personalização, os botões `−` e `+` permitem escolher a quantidade antes de adicionar ao carrinho. Você pode adicionar a mesma combinação mais de uma vez (as quantidades são somadas) ou escolher combinações diferentes de sabor, recheio e finalização; cada combinação fica registrada separadamente no carrinho. Mesmo usando “Continuar sem personalizar”, a quantidade selecionada é respeitada.
+
+
+## Página de Estações (adicionada)
+- `estacoes.html`: página exclusiva com Açaí, Fondue, Experiência Fondue e Estação Donuts.
+- `css/estacoes.css`: estilos próprios da página de estações.
+- `assets/estacao-donuts.jpeg`: foto de donuts fornecida para esta atualização.
+- Cada cartão tem um botão que abre o WhatsApp oficial da PRII DOCES com uma mensagem pronta.
+- O botão “Estações” da página inicial aponta para `estacoes.html`. A página inicial agora usa o rosa claro e não exibe as fotos das estações.
+
+
+## Área Artelato (adicionada)
+- O atalho **Artelato** fica na sexta posição da grade da página inicial, no espaço que estava vazio.
+- `artelato.html` apresenta a **Torta Artelato** com a foto `assets/torta-artelato.jpeg`.
+- O botão da torta abre o WhatsApp oficial para consultar valor e disponibilidade.
+- `css/artelato.css` controla o visual dessa página.
+- A foto `assets/perfil.jpg` agora aparece como fundo discreto e transparente na página inicial. Ela não bloqueia os cliques nos atalhos.

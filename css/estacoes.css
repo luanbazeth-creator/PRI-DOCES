@@ -1,0 +1,56 @@
+/* =====================================================================
+   PRII DOCES — PÁGINA EXCLUSIVA DE ESTAÇÕES
+   Arquivo: css/estacoes.css
+   Edite aqui as cores, cartões, fotos e botões de contato.
+   ===================================================================== */
+:root {
+  --pink-page: #f8e5eb;
+  --pink-light: #fff9fb;
+  --pink-card: #f4d9e2;
+  --pink-border: #e7bdcb;
+  --pink-deep: #a73559;
+  --brown-text: #59372f;
+  --brown-muted: #80645e;
+  --shadow: 0 10px 28px rgba(112, 54, 73, 0.12);
+}
+* { box-sizing: border-box; }
+html { min-height: 100%; scroll-behavior: smooth; }
+body {
+  min-height: 100vh; margin: 0; padding: 22px 16px 34px;
+  color: var(--brown-text);
+  background: radial-gradient(ellipse at 50% 0%, #fff8fa 0%, transparent 55%), var(--pink-page);
+  font-family: "DM Sans", Arial, sans-serif;
+}
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+.stations-page { width: min(100%, 820px); margin: 0 auto; }
+.back-link {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  padding: 9px 14px; color: var(--pink-deep); background: rgba(255,255,255,.7);
+  border: 1px solid var(--pink-border); border-radius: 999px; font-weight: 800;
+}
+.back-link span { font-size: 22px; }
+.stations-header { display: flex; flex-direction: column; align-items: center; text-align: center; padding: 20px 12px 28px; }
+.stations-logo { width: min(230px, 65%); max-height: 120px; object-fit: contain; margin-bottom: 12px; }
+.eyebrow { margin: 0 0 8px; color: var(--pink-deep); font-size: 11px; font-weight: 800; letter-spacing: .18em; }
+h1 { margin: 0; font-family: "Playfair Display", Georgia, serif; font-size: clamp(32px, 7vw, 48px); line-height: 1.1; }
+.intro { max-width: 590px; margin: 12px 0 0; color: var(--brown-muted); font-size: 16px; line-height: 1.6; }
+.stations-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+.station-card { min-width: 0; overflow: hidden; background: var(--pink-light); border: 1px solid var(--pink-border); border-radius: 22px; box-shadow: var(--shadow); }
+.station-image { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: var(--pink-card); }
+.station-content { display: flex; flex-direction: column; align-items: flex-start; padding: 17px; height: calc(100% - auto); }
+.station-content h2 { margin: 0 0 8px; font-family: "Playfair Display", Georgia, serif; font-size: clamp(20px, 3vw, 25px); line-height: 1.2; }
+.station-content p { margin: 0 0 18px; color: var(--brown-muted); font-size: 14px; line-height: 1.55; }
+.whatsapp-button { display: flex; align-items: center; justify-content: center; gap: 9px; width: 100%; min-height: 48px; margin-top: auto; padding: 11px 12px; color: #fff; background: var(--pink-deep); border: 1px solid #96294b; border-radius: 13px; font-size: 14px; font-weight: 800; text-align: center; transition: background .15s ease, transform .15s ease; }
+.whatsapp-button:hover, .whatsapp-button:focus-visible { background: #8f2948; outline: 3px solid #edc0d0; outline-offset: 2px; }
+.whatsapp-button:active { transform: scale(.985); }
+.stations-footer { padding: 25px 10px 8px; color: var(--brown-muted); font-size: 12px; text-align: center; }
+@media (max-width: 560px) {
+  body { padding: 16px 12px 28px; }
+  .stations-grid { grid-template-columns: 1fr; gap: 16px; }
+  .station-image { aspect-ratio: 5 / 3; }
+  .stations-header { padding: 17px 8px 22px; }
+  .intro { font-size: 15px; }
+  .station-content { padding: 16px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; } }

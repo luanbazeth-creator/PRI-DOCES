@@ -1,0 +1,116 @@
+/* =========================================================
+   PRII DOCES | PÁGINA ARTELATO
+   Visual independente para a área especial Artelato.
+   ========================================================= */
+
+:root {
+  --pink-page: #f8e5eb;
+  --pink-card: #fff8fa;
+  --pink-border: #e7bdcb;
+  --pink-deep: #a73559;
+  --brown-text: #59372f;
+  --brown-muted: #80645e;
+  --shadow: 0 12px 32px rgba(112, 54, 73, 0.13);
+}
+
+* { box-sizing: border-box; }
+html { min-height: 100%; }
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 22px 16px 30px;
+  color: var(--brown-text);
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(255,255,255,.9), transparent 58%),
+    var(--pink-page);
+  font-family: "DM Sans", Arial, sans-serif;
+}
+.artelato-page { width: min(100%, 620px); margin: 0 auto; }
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 42px;
+  color: var(--pink-deep);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+}
+.artelato-header { padding: 8px 12px 22px; text-align: center; }
+.artelato-header img {
+  width: clamp(112px, 30vw, 160px);
+  aspect-ratio: 1;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  filter: drop-shadow(0 5px 10px rgba(112,54,73,.08));
+}
+.eyebrow, .product-label {
+  color: var(--pink-deep);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.artelato-header h1 {
+  margin: 5px 0;
+  color: var(--brown-text);
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(34px, 8vw, 48px);
+}
+.artelato-header p { margin: 0; color: var(--brown-muted); font-size: 14px; }
+.product-card {
+  overflow: hidden;
+  border: 1px solid rgba(231,189,203,.95);
+  border-radius: 26px;
+  background: rgba(255,248,250,.94);
+  box-shadow: var(--shadow);
+}
+.product-photo {
+  display: block;
+  width: 100%;
+  max-height: 430px;
+  aspect-ratio: 1.25 / 1;
+  object-fit: cover;
+  object-position: center;
+}
+.product-content { padding: 24px clamp(18px, 5vw, 30px) 28px; text-align: center; }
+.product-content h2 {
+  margin: 7px 0 9px;
+  font-family: "Playfair Display", Georgia, serif;
+  font-size: clamp(25px, 6vw, 34px);
+}
+.product-content p {
+  max-width: 430px;
+  margin: 0 auto 20px;
+  color: var(--brown-muted);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.whatsapp-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  min-height: 52px;
+  padding: 12px 18px;
+  border-radius: 16px;
+  color: white;
+  background: #258b63;
+  box-shadow: 0 6px 16px rgba(37,139,99,.2);
+  font-size: 14px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: transform .16s ease, filter .16s ease;
+}
+.whatsapp-button:hover { filter: brightness(1.05); }
+.whatsapp-button:active { transform: scale(.98); }
+.artelato-page footer {
+  padding: 22px 8px 4px;
+  color: var(--brown-muted);
+  font-size: 12px;
+  text-align: center;
+}
+@media (max-width: 380px) {
+  body { padding: 14px 12px 24px; }
+  .product-card { border-radius: 21px; }
+  .product-photo { aspect-ratio: 1.1 / 1; }
+}
